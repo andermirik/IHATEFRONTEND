@@ -8,7 +8,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="tm-cloud" />
-        <module name="tm-cloud-backend" />
       </profile>
     </annotationProcessing>
   </component>
