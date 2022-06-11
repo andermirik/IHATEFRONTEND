@@ -64,7 +64,7 @@ public class HibernateConf {
     @Bean
     public DataSource dataSource() {
 
-        String dbPort = Optional.ofNullable(System.getenv("DB_PORT")).orElse("5432");
+        String dbPort = Optional.ofNullable(System.getenv("DB_PORT")).orElse("5433");
         String dbName = Optional.ofNullable(System.getenv("DB_NAME")).orElse("postgres");
         String dbHost = Optional.ofNullable(System.getenv("DB_HOST")).orElse("localhost");
         String dbUsername = Optional.ofNullable(System.getenv("DB_USER")).orElse("postgres");

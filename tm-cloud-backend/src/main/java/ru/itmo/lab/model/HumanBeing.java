@@ -8,6 +8,7 @@ import ru.itmo.lab.enums.WeaponType;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -24,6 +25,7 @@ public class HumanBeing {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @NotEmpty
     @Column(name = "name", nullable = false)
     private String name;
 
