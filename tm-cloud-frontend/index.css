@@ -103,7 +103,9 @@
     margin: 20px auto;  
   }
 
-  
+  th.asc{ color: rgb(42, 154, 63)}
+
+  th.desc { color: rgb(118, 39, 39) }
     
       
 

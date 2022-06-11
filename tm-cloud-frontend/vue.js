@@ -3,23 +3,23 @@ var app2 = new Vue({
   data: {
     humanBeingById: null,
     humanBeingMax: null,
-    humanBeingSave:       {
-          name: "",
-          coordinates: 
-          {
-            x: 0,
-            y:0
-          },
-          creationDate: 2022-02-21,
-          realHero: true,
-          hasToothpick: true,
-          impactSpeed: 0,
-          weaponType: "PISTOL",
-          mood: "SORROW",
-          car: {
-            name:""
-          }
-        },
+    humanBeingSave: {
+      name: "",
+      coordinates:
+      {
+        x: 0,
+        y: 0
+      },
+      creationDate: 2022 - 02 - 21,
+      realHero: true,
+      hasToothpick: true,
+      impactSpeed: 0,
+      weaponType: "PISTOL",
+      mood: "SORROW",
+      car: {
+        name: ""
+      }
+    },
     inputId: null,
     maxImpactSpeed: null,
     inputImpactSpeed: null,
@@ -29,85 +29,99 @@ var app2 = new Vue({
     item_id: null,
     hiddenId: null,
     posts: [''],
-		page: 1,
-		perPage: 9,
-		pages: [],		
-		
+    page: 1,
+    perPage: 9,
+    pages: [],
+    search: "",
+    sortByName: 0, //0 No 1 Asc -1 desc
+    sortByWeaponType: 0,
+    sortByImpactSpeed: 0,
+
+
     humanBeing: [
-      // {
-      //     name: "Dima",
-      //     coordinates: 2.353,
-      //     creationDate: 2022-02-21,
-      //     realHero: "True",
-      //     hasToothpick: "True",
-      //     impactSpeed: 14.543,
-      //     weaponType: "PISTOL",
-      //     mood: "SORROW",
-      //     car: "Mitsubishi"
-      //   }, {
-      //     name: "Andrew",
-      //     coordinates: 18.953,
-      //     creationDate: 2022-02-21,
-      //     realHero: "False",
-      //     hasToothpick: "True",
-      //     impactSpeed: 8.762,
-      //     weaponType: "HAMMER",
-      //     mood: "LONGING",
-      //     car: "Mersedes"
-      //   }, {
-      //     name: "Mark",
-      //     coordinates: 14.199,
-      //     creationDate: 2022-02-21,
-      //     realHero: "False",
-      //     hasToothpick: "True",
-      //     impactSpeed: 5.325,
-      //     weaponType: "SHOTGUN",
-      //     mood: "GLOOM",
-      //     car: "Lamba"
-      //   }, {
-      //     name: "David",
-      //     coordinates: 27.152,
-      //     creationDate: 2022-02-21,
-      //     realHero: "True",
-      //     hasToothpick: "True",
-      //     impactSpeed: 7.624,
-      //     weaponType: "KNIFE",
-      //     mood: "CALM",
-      //     car: "Porshe"
-      //   }, {
-      //     name: "Yura",
-      //     coordinates: 42.288,
-      //     creationDate: 2022-02-21,
-      //     realHero: "True",
-      //     hasToothpick: "True",
-      //     impactSpeed: 12.747,
-      //     weaponType: "PISTOL",
-      //     mood: "FRENZY",
-      //     car: "Lada"
-      //   }, {
-      //     name: "Maks",
-      //     coordinates: 31.741,
-      //     creationDate: 2022-02-21,
-      //     realHero: "False",
-      //     hasToothpick: "True",
-      //     impactSpeed: 10.356,
-      //     weaponType: "KNIFE",
-      //     mood: "SORROW",
-      //     car: "Lexus"
-      //   }, {
-      //     name: "Ilya",
-      //     coordinates: 82.742,
-      //     creationDate: 2022-02-21,
-      //     realHero: "True",
-      //     hasToothpick: "True",
-      //     impactSpeed: 10.373,
-      //     weaponType: "SHOTGUN",
-      //     mood: "LONGING",
-      //     car: "Audi"
-      //   }
     ]
   },
   methods: {
+
+    isPresent: function (value) {
+      return (value != undefined && value != null);
+    },
+
+    applyFilter: function (list) {
+      search = this.search.trim().toLowerCase();
+      if (search == "") return list;
+      return list
+        .filter(item =>
+          (this.isPresent(item.name) && item.name.toString().toLowerCase().includes(search))
+          || (this.isPresent(item.weaponType) && item.weaponType.toString().toLowerCase().includes(search))
+          || (this.isPresent(item.mood) && item.mood.toString().toLowerCase().includes(search))
+          || (this.isPresent(item.car) && this.isPresent(item.car.name) && item.car.name.toString().toLowerCase().includes(search))
+          || (this.isPresent(item.impactSpeed) && item.impactSpeed.toString().toLowerCase().includes(search))
+        )
+    },
+
+    applySort: function (list) {
+      console.log(this.sortByName)
+      console.log(this.sortByWeaponType)
+      console.log(this.sortByImpactSpeed)
+      var copyList = [...list]
+
+      if (this.sortByName != 0) {
+        if (this.sortByName == 1) {
+          copyList.sort((a, b) => a.name.localeCompare(b.name))
+        }
+        if (this.sortByName == -1) {
+          copyList.sort((b, a) => a.name.localeCompare(b.name))
+        }
+      }
+
+      if (this.sortByWeaponType != 0) {
+        if (this.sortByWeaponType == 1) {
+          copyList.sort((a, b) => a.weaponType.localeCompare(b.weaponType))
+        }
+        if (this.sortByWeaponType == -1) {
+          copyList.sort((b, a) => a.weaponType.localeCompare(b.weaponType))
+        }
+      }
+
+      if (this.sortByImpactSpeed != 0) {
+        if (this.sortByImpactSpeed == 1) {
+          copyList.sort((a, b) => a.impactSpeed - b.impactSpeed)
+        }
+        if (this.sortByImpactSpeed == -1) {
+          copyList.sort((b, a) => a.impactSpeed - b.impactSpeed)
+        }
+      }
+
+      return copyList;
+    },
+
+    sortBy: function (field) {
+      if (field == 'name') {
+        this.sortByImpactSpeed = 0;
+        this.sortByWeaponType = 0;
+        this.sortByName++;
+        if (this.sortByName == 2) {
+          this.sortByName = -1;
+        }
+      }
+      if (field == 'weaponType') {
+        this.sortByImpactSpeed = 0;
+        this.sortByName = 0;
+        this.sortByWeaponType++;
+        if (this.sortByWeaponType == 2) {
+          this.sortByWeaponType = -1;
+        }
+      }
+      if (field == 'impactSpeed') {
+        this.sortByWeaponType = 0;
+        this.sortByName = 0;
+        this.sortByImpactSpeed++;
+        if (this.sortByImpactSpeed == 2) {
+          this.sortByImpactSpeed = -1;
+        }
+      }
+    },
 
     showAllElements: function (event) {
       const headers = { "Content-Type": "application/json" };
@@ -117,7 +131,7 @@ var app2 = new Vue({
       })
         .then(response => response.json())
         .then(data => (this.humanBeing = data));
-        this.maxElement();
+      this.maxElement();
     },
 
     saveDummy: function (event) {
@@ -137,41 +151,67 @@ var app2 = new Vue({
       fetch("http://localhost:8080/human/save", {
         method: "POST",
         headers,
-        body : JSON.stringify(this.humanBeingSave)
+        body: JSON.stringify(this.humanBeingSave)
       })
-        .then(response => {
-          this.showAllElements(null);
-        })   
+      .then(response => {
+        if (!response.ok) throw new Error(response.status);
+          return response;
+      })
+      .then(response => {
+        console.log(response)
         alert("Поздравляю! Вы успешно создали элемент.");
+        this.showAllElements(null);
+      })
+      .catch( err => {
+        console.log(err)
+        console.log(this.humanBeingSave)
+        if (this.humanBeingSave.name != null && this.humanBeingSave.name.trim() == ""){
+          alert("Ошибка! Имя не должно быть пустым.");
+        }else if (this.humanBeingSave.impactSpeed != null && this.humanBeingSave.impactSpeed > 759 && this.humanBeingById.impactSpeed < 0){
+          alert("Ошибка! Скорость удара не должна быть меньше 0 и не должна превышать 759.");
+        }else alert("Попробуй еще раз");
+      })
     },
 
     updateElement: function (event) {
-      if(confirm("Вы уверены, что хотите обновить эти данные?"))
-      {
+      if (confirm("Вы уверены, что хотите обновить эти данные?")) {
         const headers = { "Content-Type": "application/json" };
         fetch("http://localhost:8080/human/update", {
           method: "POST",
           headers,
-          body : JSON.stringify(this.humanBeingById)
+          body: JSON.stringify(this.humanBeingById)
         })
-        .then(response=> this.showAllElements());
-        this.maxElement();
-        alert("Поздравляю! Вы успешно обновили элемент.");
+          .then(response => {
+            if (!response.ok) throw new Error(response.status);
+              return response;
+          })
+          .then(response => {
+            this.showAllElements();
+            alert("Поздравляю! Вы успешно обновили элемент.");
+          })
+          .catch( err => {
+            console.log(err)
+            if (this.humanBeingById.name != null && this.humanBeingById.name.trim() == ""){
+              alert("Ошибка! Имя не должно быть пустым.");
+            }else if (this.humanBeingById.impactSpeed != null && this.humanBeingById.impactSpeed > 759 && this.humanBeingById.impactSpeed < 0){
+              alert("Ошибка! Скорость удара не должна быть меньше 0 и не должна превышать 759");
+            }else alert("Попробуй еще раз");
+          })
       }
+      
     },
 
     removeElement: function (event, id) {
-      if(confirm("Вы уверены, что хотите удалить эти данные?"))
-      {
+      if (confirm("Вы уверены, что хотите удалить эти данные?")) {
         const headers = { "Content-Type": "application/json" };
         fetch(`http://localhost:8080/human/${id}`, {
           method: "DELETE",
           headers
         })
           .then(response => (this.humanBeing = this.humanBeing.filter(item => (item.id != id))));
-          this.maxElement();
-          setTimeout(() => alert("Поздравляю! Вы успешно удалили элемент."), 30) ;
-        
+        this.maxElement();
+        setTimeout(() => alert("Поздравляю! Вы успешно удалили элемент."), 30);
+
       }
     },
 
@@ -184,12 +224,12 @@ var app2 = new Vue({
         // .then(response => console.log(response))
         .then(response => response.json())
         .then(data => {
-            // console.log (data);
-            this.humanBeingById = data;
-            // console.log (humanBeingById);
-            this.showModalId = true;
-            // console.log (showModalId);
-          });
+          // console.log (data);
+          this.humanBeingById = data;
+          // console.log (humanBeingById);
+          this.showModalId = true;
+          // console.log (showModalId);
+        });
     },
 
     getElement: function (event) {
@@ -231,8 +271,6 @@ var app2 = new Vue({
     },
 
     maxMoreElement: function (event) {
-      if(confirm("Вы уверены, что хотите удалить эти данные?"))
-      {
         let inputImpactSpeed = prompt("impactSpeed: ")
         const headers = { "Content-Type": "application/json" };
         fetch(`http://localhost:8080/human/biggersThan?impactSpeed=${inputImpactSpeed}`, {
@@ -241,50 +279,64 @@ var app2 = new Vue({
         })
           .then(response => response.json())
           .then(data => (this.humanBeing = data));
-          alert("Поздравляю! Вы успешно удалили элемент.");
+        alert("Поздравляю! Вы успешно вернули массив объектов impactSpeed, который больше заданного.");
+    },
+
+    setPages() {
+      let numberOfPages = Math.ceil(this.humanBeing.length / this.perPage);
+      this.pages = []
+      for (let index = 1; index <= numberOfPages; index++) {
+        this.pages.push(index);
       }
     },
 
-		setPages () {
-			let numberOfPages = Math.ceil(this.humanBeing.length / this.perPage);
-      this.pages = []
-			for (let index = 1; index <= numberOfPages; index++) {
-				this.pages.push(index);
-			}
-		},
-
-		paginate (humanBeing) {
-			let page = this.page;
-			let perPage = this.perPage;
-			let from = (page * perPage) - perPage;
-			let to = (page * perPage);
+    paginate(humanBeing) {
+      let page = this.page;
+      let perPage = this.perPage;
+      let from = (page * perPage) - perPage;
+      let to = (page * perPage);
       // console.log(from, to)
-			return humanBeing.slice(from, to);
-		}
+      return humanBeing.slice(from, to);
+    }
 
   },
 
   computed: {
-		displayedHumanBeing () {
-			return this.paginate(this.humanBeing);
-		}
-	},
+    displayedHumanBeing() {
+      return this.paginate(
 
-	watch: {
-		humanBeing() {
-			this.setPages();
-		}
-	},
+        this.applyFilter(
+          this.applySort(
+            this.humanBeing
+          )
+        )
+      );
+    }
+  },
 
-	created(){
+  watch: {
+    humanBeing() {
+      this.setPages();
+    }
+  },
+
+  created() {
     this.showAllElements();
-	},
+  },
 
-	filters: {
-		trimWords(value){
-			return value.split(" ").splice(0,20).join(" ") + '...';
-		}
-	}
+  filters: {
+    trimWords(value) {
+      return value.split(" ").splice(0, 20).join(" ") + '...';
+    },
+  }
+
+  //   search: function(humanBeing){  
+  //     if(this.item.name=='all') return humanBeing
+  //     return humanBeing.filter(function(item){
+  //       return item.search == this.search
+  //     }.bind(this))
+  //   }
+  // }
 
 })
 

@@ -68,7 +68,6 @@
                             </table>
                         </div>
                     </span>
-                    <br>
                     <span>
                         <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary py-2 my-2"
                             v-on:click="quantityElement($event)">Вернуть количество объектов, значение поля
@@ -85,13 +84,23 @@
 
                     <!-- <hr style="color: white; height: 10px"> -->
                     <div class="card">
-                        <table>
+                        <table class="table-sm">
                             <thead>
+                                <input type="text" class="form-control mb-2" v-model="search" placeholder="Поиск"/>
                                 <tr class="text text-center">
-                                  <th> </th>
-                                  <th>Имя</th>
-                                  <th>Тип оружия</th>
-                                  <th>Скорость удара</th>
+                                  <th></th>
+                                  <th v-bind:class = "(sortByName == 0)? '' : (sortByName == 1)? 'asc' : 'desc'"
+                                  v-on:click="sortBy('name')">
+                                        Имя
+                                    </th>
+                                  <th  v-bind:class = "(sortByWeaponType == 0)? '' : (sortByWeaponType == 1)? 'asc' : 'desc'"
+                                  v-on:click="sortBy('weaponType')">
+                                  Тип оружия
+                                </th>
+                                  <th  v-bind:class = "(sortByImpactSpeed == 0)? '' : (sortByImpactSpeed == 1)? 'asc' : 'desc'"
+                                  v-on:click="sortBy('impactSpeed')">
+                                  Скорость удара
+                                </th>
                                   <th></th>
                                 </tr>
                             </thead>
@@ -142,7 +151,7 @@
                             <div class="modal-body">
                                 <div class="form-floating mb-3">
                                     <input v-model="humanBeingSave.name" type="text" class="form-control rounded-3" id="inputName"
-                                        placeholder="name" required="">
+                                        placeholder="name" required>
                                     <label for="inputName">Имя: </label>
                                 </div>
                                 <div class="form-floating mb-3">
@@ -369,7 +378,7 @@
                                     </div>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input v-model="humanBeingById.car" type="text" class="form-control rounded-3" id="inputСar"
+                                    <input v-model="humanBeingById.car.name" type="text" class="form-control rounded-3" id="inputСar"
                                         placeholder="car">
                                     <label for="inputСar">Машина: </label>
                                 </div>

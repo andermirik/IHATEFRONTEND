@@ -7,6 +7,7 @@ import ru.itmo.lab.enums.WeaponType;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -41,6 +42,7 @@ public class HumanBeing {
     private boolean hasToothpick;
 
     @Max(759)
+    @Min(0)
     @Column(name = "impactSpeed")
     private float impactSpeed;
 
