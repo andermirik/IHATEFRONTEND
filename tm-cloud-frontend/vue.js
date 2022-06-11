@@ -1,3 +1,5 @@
+var backendUrl = "http://labvm-42-02.itmo-lab.cosm-lab.science:8080"
+
 var app2 = new Vue({
   el: '#container',
   data: {
@@ -125,7 +127,7 @@ var app2 = new Vue({
 
     showAllElements: function (event) {
       const headers = { "Content-Type": "application/json" };
-      fetch("http://localhost:8080/human", {
+      fetch(backendUrl + "/human", {
         method: "GET",
         headers
       })
@@ -136,7 +138,7 @@ var app2 = new Vue({
 
     saveDummy: function (event) {
       const headers = { "Content-Type": "application/json" };
-      fetch("http://localhost:8080/human/saveDummy", {
+      fetch(backendUrl + "/human/saveDummy", {
         method: "POST",
         headers
       })
@@ -148,7 +150,7 @@ var app2 = new Vue({
     save: function (event) {
       this.humanBeingSave.coordinates.x
       const headers = { "Content-Type": "application/json" };
-      fetch("http://localhost:8080/human/save", {
+      fetch(backendUrl + "/human/save", {
         method: "POST",
         headers,
         body: JSON.stringify(this.humanBeingSave)
@@ -176,7 +178,7 @@ var app2 = new Vue({
     updateElement: function (event) {
       if (confirm("Вы уверены, что хотите обновить эти данные?")) {
         const headers = { "Content-Type": "application/json" };
-        fetch("http://localhost:8080/human/update", {
+        fetch(backendUrl + "/human/update", {
           method: "POST",
           headers,
           body: JSON.stringify(this.humanBeingById)
