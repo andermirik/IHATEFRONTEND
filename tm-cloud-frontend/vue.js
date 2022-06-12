@@ -231,7 +231,7 @@ var app2 = new Vue({
     removeElement: function (event, id) {
       if (confirm("Вы уверены, что хотите удалить эти данные?")) {
         const headers = { "Content-Type": "application/json" };
-        fetch(`http://localhost:8080/human/${id}`, {
+        fetch(backendUrl + `/human/${id}`, {
           method: "DELETE",
           headers
         })
@@ -244,7 +244,7 @@ var app2 = new Vue({
 
     showById: function (event, id) {
       const headers = { "Content-Type": "application/json" };
-      fetch(`http://localhost:8080/human/${id}`, {
+      fetch(backendUrl + `/human/${id}`, {
         method: "GET",
         headers
       })
@@ -261,7 +261,7 @@ var app2 = new Vue({
 
     getElement: function (event) {
       const headers = { "Content-Type": "application/json" };
-      fetch(`http://localhost:8080/human/${this.inputId}`, {
+      fetch(backendUrl + `/human/${this.inputId}`, {
         method: "GET",
         headers
       })
@@ -276,7 +276,7 @@ var app2 = new Vue({
 
     maxElement: function (event) {
       const headers = { "Content-Type": "application/json" };
-      fetch(`http://localhost:8080/human/fastest`, {
+      fetch(backendUrl + `/human/fastest`, {
         method: "GET",
         headers
       })
@@ -289,7 +289,7 @@ var app2 = new Vue({
     quantityElement: function (even) {
       let inputImpactSpeed = prompt("impactSpeed: ")
       const headers = { "Content-Type": "application/json" };
-      fetch(`http://localhost:8080/human/biggersThan?impactSpeed=${inputImpactSpeed}`, {
+      fetch(backendUrl + `/human/biggersThan?impactSpeed=${inputImpactSpeed}`, {
         method: "GET",
         headers
       })
@@ -300,7 +300,7 @@ var app2 = new Vue({
     maxMoreElement: function (event) {
         let inputImpactSpeed = prompt("impactSpeed: ")
         const headers = { "Content-Type": "application/json" };
-        fetch(`http://localhost:8080/human/biggersThan?impactSpeed=${inputImpactSpeed}`, {
+        fetch(backendUrl + `/human/biggersThan?impactSpeed=${inputImpactSpeed}`, {
           method: "GET",
           headers
         })
