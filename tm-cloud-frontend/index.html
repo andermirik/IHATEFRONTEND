@@ -81,8 +81,6 @@
                             которых
                             больше заданного</button>
                     </span>
-
-                    <!-- <hr style="color: white; height: 10px"> -->
                     <div class="card">
                         <table class="table-sm">
                             <thead>
@@ -128,7 +126,7 @@
                                 <button type="button" class="page-link" v-for="pageNumber in pages.slice(page-1, page+5)" @click="page = pageNumber"> {{pageNumber}} </button>
                             </li>
                             <li class="page-item">
-                                <button type="button" @click="page++" v-if="page < pages.length" class="page-link"> Следующая </button>
+                                <button type="button" class="page-link" @click="page++" v-if="page < pages.length"> Следующая </button>
                             </li>
                         </ul>
                     </nav>	
@@ -138,7 +136,6 @@
 
         <div class="b-example-divider"></div>
         <div v-if="showModalAdd">
-            <!-- <transition name="model"> -->
             <div class="modal-mask">
                 <div class="modal-wrapper">
                     <div class="modal-dialog">
@@ -165,7 +162,7 @@
                                     <label for="inputCoordinates_y">Координаты оси y: </label>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <div class="form-check">
+                                    <div class="switch">
                                         <input type="checkbox" class="form-check-input" v-model="humanBeingSave.realHero" id="inputRealHero">
                                         <label class="form-check-label" for="inputRealHero">Герой существует</label>
                                     </div>
@@ -220,19 +217,16 @@
                                     <button type="button" class="btn btn-sm btn-outline-secondary"
                                         v-on:click="save($event)" @click="showModalAdd=false"><img src="access.png" /></button>
                                 </small>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- </transition> -->
         </div>
         <br>
         <br>
         <br>
         <div v-if="showModalId">
-            <!-- <transition name="model"> -->
             <div class="modal-mask">
                 <div class="modal-wrapper">
                     <div class="modal-dialog">
@@ -242,70 +236,76 @@
                                 <span aria-hidden="true"><img src="closed.png" /></span></button>
                                 <h6 class="border-bottom pb-2 mb-0 text-secondary px-3 py-3"><strong>Подробная информация</strong></h6>
                         </div>
-                        <div class="my-3 p-3 bg-body rounded shadow-sm">
-                            <div class="d-flex text-muted pt-3">
-                                <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32"
-                                    height="32" src="user.png" role="img" aria-label="Placeholder: 32x32"
-                                    preserveAspectRatio="xMidYMid slice" focusable="false">
-                                <title>Герой</title>
-                                <rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%"
-                                    fill="#007bff" dy=".3em">32x32</text></svg>
-
-                                <p class="pb-3 mb-0 small lh-sm border-bottom">
-                                    <strong class="d-block text-gray-dark"><span>Уникальный номер:
-                                            {{humanBeingById.id}}</span></strong>
-                                    <strong class="d-block text-gray-dark"><span>Имя:
-                                            {{humanBeingById.name}}</span></strong>
-                                    <strong class="d-block text-gray-dark"><span>Тип оружия:
-                                            {{humanBeingById.weaponType}}</span></strong>
-                                    <strong class="d-block text-gray-dark"><span>Скорость удара:
-                                            {{humanBeingById.impactSpeed==null?'Неизвестно':humanBeingById.impactSpeed}}</span></strong>
-                                    <strong class="d-block text-gray-dark"><span>Настроение:
-                                            {{humanBeingById.mood}}</span></strong>
-                                    <strong class="d-block text-gray-dark"><span>Машина:
-                                            {{humanBeingById.car.name==null?'Неизвестная модель':humanBeingById.car.name}}</span></strong>
-                                    <!-- <strong class="d-block text-gray-dark"><span>Координаты: {{humanBeingById.coordinates}}</span></strong> -->
-                                    <strong class="d-block text-gray-dark"><span>Координаты:
-                                            {{humanBeingById.coordinates.x==null?'Неизвестно':humanBeingById.coordinates.x}}</span></strong>
-                                    <strong class="d-block text-gray-dark"><span>Координаты:
-                                            {{humanBeingById.coordinates.y==null?'Неизвестно':humanBeingById.coordinates.y}}</span></strong>
-                                    <strong class="d-block text-gray-dark"><span>Дата создания:
-                                            {{humanBeingById.creationDate}}</span></strong>
-                                        
-                                    <strong class="d-block text-gray-dark"><span>Герой сущесвует:
-                                            {{humanBeingById.realHero}}</span></strong>
-                                    <strong class="d-block text-gray-dark"><span>Есть зубочистка:
-                                            {{humanBeingById.hasToothpick==null?'Неизвестно':humanBeingById.hasToothpick}}</span></strong>
-                                </p>
-                            </div>
-
-                            <small class="d-block text-end mt-3">
-                                <input type="hidden" v-model="hiddenId" />
-                                <button type="button" class="btn btn-sm btn-outline-secondary"
-                                    v-on:click="removeElement($event, humanBeingById.id)"
-                                    @click="showModalId=false"><img src="trash.png" /></button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary"
-                                    id="show-modal-button"
-                                    @click="showModalEdit = true, item_id = humanBeingById.id"><img
-                                        src="edit.png" /></button>
-                                <!-- <button type="button" class="btn btn-sm btn-outline-secondary"
-                                    data-bs-dismiss="modal" @click="showModalId = false, item_id = null"><img
-                                        src="undo.png" /></button> -->
-                            </small>
-                        </div>
-
-
+                          <div class="modal-body">  
+                            <div class="card my-3 p-3 bg-body rounded shadow-sm">
+                                    <span class="d-block text-black">
+                                        <strong > Уникальный номер: </strong>
+                                        <span>{{humanBeingById.id}}</span>
+                                    </span>
+                                    <span class="d-block text-black">
+                                        <strong > Имя: </strong>
+                                        <span>{{humanBeingById.name}}</span>
+                                    </span>
+                                    <span class="d-block text-black">
+                                        <strong > Тип оружия: </strong>
+                                        <span>{{humanBeingById.weaponType}}</span>
+                                    </span>
+                                    <span class="d-block text-black">
+                                        <strong > Скорость удара: </strong>
+                                        <span>{{humanBeingById.impactSpeed==null?'Неизвестно':humanBeingById.impactSpeed}}</span>
+                                    </span>
+                                    <span class="d-block text-black">
+                                        <strong > Настроение: </strong>
+                                        <span>{{humanBeingById.mood}}</span>
+                                    </span>
+                                    <span class="d-block text-black">
+                                        <strong > Координата x: </strong>
+                                        <span>{{humanBeingById.coordinates.x==null?'Неизвестно':humanBeingById.coordinates.x}}</span>
+                                    </span>
+                                    <span class="d-block text-black">
+                                        <strong > Координата y: </strong>
+                                        <span>{{humanBeingById.coordinates.y==null?'Неизвестно':humanBeingById.coordinates.y}}</span>
+                                    </span>
+                                    <span class="d-block text-black">
+                                        <strong >Дата создания: </strong>
+                                        <span>{{humanBeingById.creationDate}}</span>
+                                    </span>
+                                    <span class="d-block text-black">
+                                        <strong > Герой сущесвует: </strong>
+                                        <span>{{humanBeingById.realHero}}</span>
+                                    </span>
+                                    <span class="d-block text-black">
+                                        <strong > Есть зубочистка: </strong>
+                                        <span>{{humanBeingById.hasToothpick==null?'Неизвестно':humanBeingById.hasToothpick}}</span>
+                                    </span>
+                                    <span class=" d-block text-black">
+                                        <strong > Машина: </strong>
+                                        <span>{{humanBeingById.car.name==null?'Неизвестная модель':humanBeingById.car.name}}</span>
+                                    </span>
+                                </div>
+                                <small class="d-block text-end mt-3">
+                                    <input type="hidden" v-model="hiddenId" />
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                                        v-on:click="removeElement($event, humanBeingById.id)"
+                                        @click="showModalId=false"><img src="trash.png" /></button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                                        id="show-modal-button"
+                                        @click="showModalEdit = true, item_id = humanBeingById.id"><img
+                                            src="edit.png" /></button>
+                                    <!-- <button type="button" class="btn btn-sm btn-outline-secondary"
+                                        data-bs-dismiss="modal" @click="showModalId = false, item_id = null"><img
+                                            src="undo.png" /></button> -->
+                                </small>
+                            </div> 
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- </transition> -->
         </div>
         <br>
         <br>
         <br>
         <div v-if="showModalEdit">
-            <!-- <transition name="model"> -->
             <div class="modal-mask">
                 <div class="modal-wrapper">
                     <div class="modal-dialog">
@@ -386,18 +386,16 @@
                                 <small class="d-block text-end mt-3">
                                     <input type="hidden" v-model="hiddenId" />
                                     <button type="button" class="btn btn-sm btn-outline-secondary"
-                                        v-on:click="updateElement($event)" @click="showModalId=false, showModalEdit=false"><img src="access.png" /></button>
+                                        v-on:click="updateElement($event)" @click="showModalId=false, showModalEdit=false" ><img src="access.png" /></button>
                                     <button type="button" class="btn btn-sm btn-outline-secondary"
                                         data-bs-dismiss="modal" @click="showModalEdit = false, item_id = null"><img
                                             src="undo.png" /></button>
                                 </small>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- </transition> -->
         </div>
         <br>
         <br>
@@ -411,7 +409,7 @@
                             <use xlink:href="#bootstrap"></use>
                         </svg>
                     </a>
-                    <span class="mb-3 mb-md-0 text-muted">© 2022 Команда 1</span>
+                    <span class="mb-3 mb-md-0 text-muted">© 2022 Команда 1</span> 
                 </div>
             </footer>
         </div>
