@@ -1,0 +1,423 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Облачная разработка</title>
+    <link rel="stylesheet" type="text/css" href="index.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="container">
+        <section class="text-center container">
+            <div class="row py-lg-1">
+                <div class="col-lg-6 col-md-8 mx-auto bg-dark">
+                    <span>
+                        <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary py-2 my-2"
+                            v-on:click="showAllElements($event)">Показать все элементы</button>
+                    </span>
+                    <br>
+                    <span>
+                        <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary py-2 my-2"
+                            v-on:click="saveDummy($event)">Манекен</button>
+                    </span>
+                    <br>
+                    <span>
+                        <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary py-2 my-2"
+                            @click="showModalAdd=true">Добавление нового элемента</button>
+                    </span>
+                    <!-- <br>
+                    <span>
+                        <div class="form-floating mb-3">
+                            <input v-model="inputId" type="text" class="form-control rounded-3" id="inputId"
+                                placeholder="Введите id">
+                            <label for="inputId">Id: </label>
+                            <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary py-2 my-2"
+                                v-on:click="getElement()">Получить элемент id {{ inputId }}</button>
+                        </div>
+                    </span> -->
+                    <br>
+                    <span v-if="humanBeingMax != null">
+                        <div class="card">
+                            <table>
+                                <thead>
+                                    <tr class="text text-center">
+                                      <th> </th>
+                                      <th>Имя</th>
+                                      <th>Тип оружия</th>
+                                      <th>Скорость удара</th>
+                                      <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{humanBeingMax.id}}</td>
+                                        <td>{{humanBeingMax.name}}</td>
+                                        <td>{{humanBeingMax.weaponType}}</td>
+                                        <td>{{humanBeingMax.impactSpeed}}</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-secondary" id="show-modal"
+                                                v-on:click="showById($event, humanBeingMax.id)"><img src="info.png" /></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </span>
+                    <span>
+                        <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary py-2 my-2"
+                            v-on:click="quantityElement($event)">Вернуть количество объектов, значение поля
+                            impactSpeed которых
+                            больше заданного</button>
+                    </span>
+                    <br>
+                    <span>
+                        <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary py-2 my-2"
+                            v-on:click="maxMoreElement($event)">Вернуть массив объектов, значение поля impactSpeed
+                            которых
+                            больше заданного</button>
+                    </span>
+                    <div class="card">
+                        <table class="table-sm">
+                            <thead>
+                                <input type="text" class="form-control mb-2" v-model="search" placeholder="Поиск"/>
+                                <tr class="text text-center">
+                                  <th></th>
+                                  <th v-bind:class = "(sortByName == 0)? '' : (sortByName == 1)? 'asc' : 'desc'"
+                                  v-on:click="sortBy('name')">
+                                        Имя
+                                    </th>
+                                  <th  v-bind:class = "(sortByWeaponType == 0)? '' : (sortByWeaponType == 1)? 'asc' : 'desc'"
+                                  v-on:click="sortBy('weaponType')">
+                                  Тип оружия
+                                </th>
+                                  <th  v-bind:class = "(sortByImpactSpeed == 0)? '' : (sortByImpactSpeed == 1)? 'asc' : 'desc'"
+                                  v-on:click="sortBy('impactSpeed')">
+                                  Скорость удара
+                                </th>
+                                  <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(item,i) in displayedHumanBeing">
+                                    <td>{{item.id}}</td>
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.weaponType}}</td>
+                                    <td>{{item.impactSpeed}}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-secondary" id="show-modal"
+                                            v-on:click="showById($event, item.id)"><img src="info.png" /></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-end py-3">
+                            <li class="page-item">
+                                <button type="button" class="page-link" v-if="page != 1" @click="page--"> Предыдущая </button>
+                            </li>
+                            <li class="page-item">
+                                <button type="button" class="page-link" v-for="pageNumber in pages.slice(page-1, page+5)" @click="page = pageNumber"> {{pageNumber}} </button>
+                            </li>
+                            <li class="page-item">
+                                <button type="button" class="page-link" @click="page++" v-if="page < pages.length"> Следующая </button>
+                            </li>
+                        </ul>
+                    </nav>	
+                </div>
+            </div>
+        </section>
+
+        <div class="b-example-divider"></div>
+        <div v-if="showModalAdd">
+            <div class="modal-mask">
+                <div class="modal-wrapper">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" @click="showModalAdd=false">
+                                    <span aria-hidden="true"><img src="closed.png" /></span></button>
+                                <h6 class="border-bottom pb-2 mb-0 text-secondary px-3 py-3"><strong>Создать объект</strong></h6>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-floating mb-3">
+                                    <input v-model="humanBeingSave.name" type="text" class="form-control rounded-3" id="inputName"
+                                        placeholder="name" required>
+                                    <label for="inputName">Имя: </label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input v-model.number="humanBeingSave.coordinates.x" type="number" class="form-control rounded-3"
+                                        id="inputCoordinates_x" placeholder="coordinates_x">
+                                    <label for="inputCoordinates_x">Координаты оси x: </label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input v-model.number="humanBeingSave.coordinates.y" type="number" class="form-control rounded-3"
+                                        id="inputCoordinates_y" placeholder="coordinates_y">
+                                    <label for="inputCoordinates_y">Координаты оси y: </label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <div class="switch">
+                                        <input type="checkbox" class="form-check-input" v-model="humanBeingSave.realHero" id="inputRealHero">
+                                        <label class="form-check-label" for="inputRealHero">Герой существует</label>
+                                    </div>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" v-model="humanBeingSave.hasToothpick" id="inputHasToothpick">
+                                        <label class="form-check-label" for="inputHasToothpick">Есть зубачистка</label>
+                                    </div>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input v-model.number="humanBeingSave.impactSpeed" type="number" class="form-control rounded-3"
+                                        id="inputImpactSpeed" placeholder="impactSpeed">
+                                    <label for="inputImpactSpeed">Скорость удара: </label>
+                                </div>
+                                <div class="form col-md-15 mb-3">
+                                    <label for="inputWeaponType" class="form-label" required="">Тип оружия: </label>
+                                    <select v-model="humanBeingSave.weaponType" class="form-select" id="inputWeaponType"
+                                        required="">
+                                        <option disabled>Выбрать...</option>
+                                        <option value="HAMMER">Молоток</option>
+                                        <option value="PISTOL">Пистолет</option>
+                                        <option value="SHOTGUN">Дробовик</option>
+                                        <option value="KNIFE">Нож</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Пожалуйста, укажите предложенный вариант.
+                                    </div>
+                                </div>
+                                <div class="form col-md-15 mb-3">
+                                    <label for="inputMood" class="form-label" required="">Настроение:</label>
+                                    <select v-model="humanBeingSave.mood" class="form-select" id="inputMood" required="">
+                                        <option disabled>Выбрать...</option>
+                                        <option value="SORROW">Печаль</option>
+                                        <option value="LONGING">Жажда</option>
+                                        <option value="GLOOM">Мрак</option>
+                                        <option value="CALM">Спокойствие</option>
+                                        <option value="FRENZY">Безумность</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Пожалуйста, укажите предложенный вариант.
+                                    </div>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input v-model="humanBeingSave.car.name" type="text" class="form-control rounded-3" id="inputСar"
+                                        placeholder="car">
+                                    <label for="inputСar">Машина: </label>
+                                </div>
+                                <br />
+                                <small class="d-block text-end mt-3">
+                                    <input type="hidden" v-model="hiddenId" />
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                                        v-on:click="save($event)" @click="showModalAdd=false"><img src="access.png" /></button>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div v-if="showModalId">
+            <div class="modal-mask">
+                <div class="modal-wrapper">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" @click="showModalId=false">
+                                <span aria-hidden="true"><img src="closed.png" /></span></button>
+                                <h6 class="border-bottom pb-2 mb-0 text-secondary px-3 py-3"><strong>Подробная информация</strong></h6>
+                        </div>
+                          <div class="modal-body">  
+                            <div class="card my-3 p-3 bg-body rounded shadow-sm">
+                                    <span class="d-block text-black">
+                                        <strong > Уникальный номер: </strong>
+                                        <span>{{humanBeingById.id}}</span>
+                                    </span>
+                                    <span class="d-block text-black">
+                                        <strong > Имя: </strong>
+                                        <span>{{humanBeingById.name}}</span>
+                                    </span>
+                                    <span class="d-block text-black">
+                                        <strong > Тип оружия: </strong>
+                                        <span>{{humanBeingById.weaponType}}</span>
+                                    </span>
+                                    <span class="d-block text-black">
+                                        <strong > Скорость удара: </strong>
+                                        <span>{{humanBeingById.impactSpeed==null?'Неизвестно':humanBeingById.impactSpeed}}</span>
+                                    </span>
+                                    <span class="d-block text-black">
+                                        <strong > Настроение: </strong>
+                                        <span>{{humanBeingById.mood}}</span>
+                                    </span>
+                                    <span class="d-block text-black">
+                                        <strong > Координата x: </strong>
+                                        <span>{{humanBeingById.coordinates.x==null?'Неизвестно':humanBeingById.coordinates.x}}</span>
+                                    </span>
+                                    <span class="d-block text-black">
+                                        <strong > Координата y: </strong>
+                                        <span>{{humanBeingById.coordinates.y==null?'Неизвестно':humanBeingById.coordinates.y}}</span>
+                                    </span>
+                                    <span class="d-block text-black">
+                                        <strong >Дата создания: </strong>
+                                        <span>{{humanBeingById.creationDate}}</span>
+                                    </span>
+                                    <span class="d-block text-black">
+                                        <strong > Герой сущесвует: </strong>
+                                        <span>{{humanBeingById.realHero}}</span>
+                                    </span>
+                                    <span class="d-block text-black">
+                                        <strong > Есть зубочистка: </strong>
+                                        <span>{{humanBeingById.hasToothpick==null?'Неизвестно':humanBeingById.hasToothpick}}</span>
+                                    </span>
+                                    <span class=" d-block text-black">
+                                        <strong > Машина: </strong>
+                                        <span>{{humanBeingById.car.name==null?'Неизвестная модель':humanBeingById.car.name}}</span>
+                                    </span>
+                                </div>
+                                <small class="d-block text-end mt-3">
+                                    <input type="hidden" v-model="hiddenId" />
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                                        v-on:click="removeElement($event, humanBeingById.id)"
+                                        @click="showModalId=false"><img src="trash.png" /></button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                                        id="show-modal-button"
+                                        @click="showModalEdit = true, item_id = humanBeingById.id"><img
+                                            src="edit.png" /></button>
+                                    <!-- <button type="button" class="btn btn-sm btn-outline-secondary"
+                                        data-bs-dismiss="modal" @click="showModalId = false, item_id = null"><img
+                                            src="undo.png" /></button> -->
+                                </small>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div v-if="showModalEdit">
+            <div class="modal-mask">
+                <div class="modal-wrapper">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" @click="showModalEdit=false; showModalId=false">
+                                    <span aria-hidden="true"><img src="closed.png" /></span></button>
+                                <h6 class="border-bottom pb-2 mb-0 text-secondary px-3 py-3"><strong>Редактировать
+                                        информацию</strong></h6>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-floating mb-3">
+                                    <input v-model="humanBeingById.name" type="text" class="form-control rounded-3" id="inputName"
+                                        placeholder="name" required="">
+                                    <label for="inputName">Имя: </label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input v-model.number="humanBeingById.coordinates.x" type="number" class="form-control rounded-3"
+                                        id="inputCoordinates_x" placeholder="coordinates_x">
+                                    <label for="inputCoordinates_x">Координаты оси x: </label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input v-model.number="humanBeingById.coordinates.y" type="number" class="form-control rounded-3"
+                                        id="inputCoordinates_y" placeholder="coordinates_y">
+                                    <label for="inputCoordinates_y">Координаты оси y: </label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" v-model="humanBeingById.realHero" id="inputRealHero">
+                                        <label class="form-check-label" for="inputRealHero">Герой существует</label>
+                                    </div>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" v-model="humanBeingById.hasToothpick" id="inputHasToothpick">
+                                        <label class="form-check-label" for="inputHasToothpick">Есть зубачистка</label>
+                                    </div>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input v-model.number="humanBeingById.impactSpeed" type="number" class="form-control rounded-3"
+                                        id="inputImpactSpeed" placeholder="impactSpeed">
+                                    <label for="inputImpactSpeed">Скорость удара: </label>
+                                </div>
+                                <div class="form col-md-15 mb-3">
+                                    <label for="inputWeaponType" class="form-label" required="">Тип оружия: </label>
+                                    <select v-model="humanBeingById.weaponType" class="form-select" id="inputWeaponType"
+                                        required="">
+                                        <option disabled>Выбрать...</option>
+                                        <option value="HAMMER">Молоток</option>
+                                        <option value="PISTOL">Пистолет</option>
+                                        <option value="SHOTGUN">Дробовик</option>
+                                        <option value="KNIFE">Нож</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Пожалуйста, укажите предложенный вариант.
+                                    </div>
+                                </div>
+                                <div class="form col-md-15 mb-3">
+                                    <label for="inputMood" class="form-label" required="">Настроение:</label>
+                                    <select v-model="humanBeingById.mood" class="form-select" id="inputMood" required="">
+                                        <option disabled>Выбрать...</option>
+                                        <option value="SORROW">Печаль</option>
+                                        <option value="LONGING">Жажда</option>
+                                        <option value="GLOOM">Мрак</option>
+                                        <option value="CALM">Спокойствие</option>
+                                        <option value="FRENZY">Безумность</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Пожалуйста, укажите предложенный вариант.
+                                    </div>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input v-model="humanBeingById.car.name" type="text" class="form-control rounded-3" id="inputСar"
+                                        placeholder="car">
+                                    <label for="inputСar">Машина: </label>
+                                </div>
+                                <br />
+                                <small class="d-block text-end mt-3">
+                                    <input type="hidden" v-model="hiddenId" />
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                                        v-on:click="updateElement($event)" @click="showModalId=false, showModalEdit=false" ><img src="access.png" /></button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                                        data-bs-dismiss="modal" @click="showModalEdit = false, item_id = null"><img
+                                            src="undo.png" /></button>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="container">
+            <footer
+                class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top bg-dark text-secondary">
+                <div class="col-md-4 d-flex align-items-center">
+                    <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                        <svg class="bi" width="30" height="24">
+                            <use xlink:href="#bootstrap"></use>
+                        </svg>
+                    </a>
+                    <span class="mb-3 mb-md-0 text-muted">© 2022 Команда 1</span> 
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+<script src="vue.js"></script>
+
+</html>
