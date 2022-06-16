@@ -1,0 +1,12 @@
+/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/enums/WeaponType.java
+/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/model/Coordinates.java
+/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/config/WebConfig.java
+/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/model/Car.java
+/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/enums/Mood.java
+/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/model/HumanBeing.java
+/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/config/JacksonConfiguration.java
+/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/repository/HumanBeingRepository.java
+/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/config/MyWebInitializer.java
+/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/controller/HumanBeingController.java
+/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/dao/HumanBeingDao.java
+/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/config/HibernateConf.java
