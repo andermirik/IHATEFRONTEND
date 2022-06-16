@@ -1,8 +1,10 @@
-var backendUrl = "http://labvm-42-02.itmo-lab.cosm-lab.science:8080"
+var backendUrl = "http://localhost:8080"
+// var backendUrl = "http://labvm-42-02.itmo-lab.cosm-lab.science:8080"
 
 var app2 = new Vue({
   el: '#container',
   data: {
+    humanBeing: [],
     humanBeingById: null,
     humanBeingMax: null,
     humanBeingSave: {
@@ -28,7 +30,7 @@ var app2 = new Vue({
     showModalAdd: false,
     showModalEdit: false,
     showModalId: false,
-    item_id: null,
+    itemId: null,
     hiddenId: null,
     posts: [''],
     page: 1,
@@ -38,10 +40,6 @@ var app2 = new Vue({
     sortByName: 0, //0 No 1 Asc -1 desc
     sortByWeaponType: 0,
     sortByImpactSpeed: 0,
-
-
-    humanBeing: [
-    ]
   },
   methods: {
 
@@ -63,9 +61,6 @@ var app2 = new Vue({
     },
 
     applySort: function (list) {
-      console.log(this.sortByName)
-      console.log(this.sortByWeaponType)
-      console.log(this.sortByImpactSpeed)
       var copyList = [...list]
 
       if (this.sortByName != 0) {
@@ -125,7 +120,7 @@ var app2 = new Vue({
       }
     },
 
-    showAllElements: function (event) {
+    showAllHumanBeings: function (event) {
       const headers = { "Content-Type": "application/json" };
       fetch(backendUrl + "/human", {
         method: "GET",
@@ -136,7 +131,7 @@ var app2 = new Vue({
       this.maxElement();
     },
 
-    saveDummy: function (event) {
+    saveHumanBeingToDummy: function (event) {
       const headers = { "Content-Type": "application/json" };
       fetch(backendUrl + "/human/saveDummy", {
         method: "POST",
@@ -147,57 +142,56 @@ var app2 = new Vue({
       this.maxElement();
     },
 
-    save: function (event) {
+    saveHumanBeing: function (event) {
 
-      if(this.humanBeingSave.impactSpeed === "") {
+      if (this.humanBeingSave.impactSpeed === "") {
         this.humanBeingSave.impactSpeed = 0;
       }
 
-      if(this.humanBeingSave.coordinates.x === "") {
+      if (this.humanBeingSave.coordinates.x === "") {
         this.humanBeingSave.coordinates.x = 0;
       }
 
-      if(this.humanBeingSave.coordinates.y === "") {
+      if (this.humanBeingSave.coordinates.y === "") {
         this.humanBeingSave.coordinates.y = 0;
       }
-      
+
       const headers = { "Content-Type": "application/json" };
       fetch(backendUrl + "/human/save", {
         method: "POST",
         headers,
         body: JSON.stringify(this.humanBeingSave)
       })
-      .then(response => {
-        if (!response.ok) throw new Error(response.status);
+        .then(response => {
+          if (!response.ok) throw new Error(response.status);
           return response;
-      })
-      .then(response => {
-        console.log(response)
-        alert("Поздравляю! Вы успешно создали элемент.");
-        this.showAllElements(null);
-      })
-      .catch( err => {
-        console.log(err)
-        console.log(this.humanBeingSave)
-        if (this.humanBeingSave.name != null && this.humanBeingSave.name.trim() == ""){
-          alert("Ошибка! Имя не должно быть пустым.");
-        }else if (this.humanBeingSave.impactSpeed != null && this.humanBeingSave.impactSpeed > 759 && this.humanBeingById.impactSpeed < 0){
-          alert("Ошибка! Скорость удара не должна быть меньше 0 и не должна превышать 759.");
-        }else alert("Попробуй еще раз");
-      })
+        })
+        .then(response => {
+          console.log(response)
+          alert("Поздравляю! Вы успешно сохранили информацию о человеке.");
+          this.showAllHumanBeings(null);
+        })
+        .catch(err => {
+          console.log(err)
+          if (this.humanBeingSave.name != null && this.humanBeingSave.name.trim() == "") {
+            alert("Ошибка! Имя не должно быть пустым.");
+          } else if (this.humanBeingSave.impactSpeed != null && this.humanBeingSave.impactSpeed > 759 && this.humanBeingById.impactSpeed < 0) {
+            alert("Ошибка! Скорость удара не должна быть меньше 0 и не должна превышать 759.");
+          } else alert("Попробуй еще раз");
+        })
     },
 
-    updateElement: function (event) {
+    updateHumanBeing: function (event) {
 
-      if(this.humanBeingSave.impactSpeed === "") {
+      if (this.humanBeingSave.impactSpeed === "") {
         this.humanBeingSave.impactSpeed = 0;
       }
 
-      if(this.humanBeingSave.coordinates.x === "") {
+      if (this.humanBeingSave.coordinates.x === "") {
         this.humanBeingSave.coordinates.x = 0;
       }
 
-      if(this.humanBeingSave.coordinates.y === "") {
+      if (this.humanBeingSave.coordinates.y === "") {
         this.humanBeingSave.coordinates.y = 0;
       }
 
@@ -210,25 +204,25 @@ var app2 = new Vue({
         })
           .then(response => {
             if (!response.ok) throw new Error(response.status);
-              return response;
+            return response;
           })
           .then(response => {
-            this.showAllElements();
-            alert("Поздравляю! Вы успешно обновили элемент.");
+            this.showAllHumanBeings();
+            alert("Поздравляю! Вы успешно обновили информацию о человеке.");
           })
-          .catch( err => {
+          .catch(err => {
             console.log(err)
-            if (this.humanBeingById.name != null && this.humanBeingById.name.trim() == ""){
+            if (this.humanBeingById.name != null && this.humanBeingById.name.trim() == "") {
               alert("Ошибка! Имя не должно быть пустым.");
-            }else if (this.humanBeingById.impactSpeed != null && this.humanBeingById.impactSpeed > 759 && this.humanBeingById.impactSpeed < 0){
+            } else if (this.humanBeingById.impactSpeed != null && this.humanBeingById.impactSpeed > 759 && this.humanBeingById.impactSpeed < 0) {
               alert("Ошибка! Скорость удара не должна быть меньше 0 и не должна превышать 759");
-            }else alert("Попробуй еще раз");
+            } else alert("Попробуй еще раз");
           })
       }
-      
+
     },
 
-    removeElement: function (event, id) {
+    removeHumanBeing: function (event, id) {
       if (confirm("Вы уверены, что хотите удалить эти данные?")) {
         const headers = { "Content-Type": "application/json" };
         fetch(backendUrl + `/human/${id}`, {
@@ -237,41 +231,22 @@ var app2 = new Vue({
         })
           .then(response => (this.humanBeing = this.humanBeing.filter(item => (item.id != id))));
         this.maxElement();
-        setTimeout(() => alert("Поздравляю! Вы успешно удалили элемент."), 30);
+        setTimeout(() => alert("Поздравляю! Вы успешно удалили информацию о человеке."), 30);
 
       }
     },
 
-    showById: function (event, id) {
+    showHumanBeingById: function (event, id) {
       const headers = { "Content-Type": "application/json" };
       fetch(backendUrl + `/human/${id}`, {
         method: "GET",
         headers
       })
-        // .then(response => console.log(response))
         .then(response => response.json())
         .then(data => {
-          // console.log (data);
           this.humanBeingById = data;
-          // console.log (humanBeingById);
           this.showModalId = true;
-          // console.log (showModalId);
         });
-    },
-
-    getElement: function (event) {
-      const headers = { "Content-Type": "application/json" };
-      fetch(backendUrl + `/human/${this.inputId}`, {
-        method: "GET",
-        headers
-      })
-        // .then(response => console.log(response))
-        .then(response => response.json())
-        .then(data => {
-          this.humanBeing = [];
-          return data;
-        })
-        .then(data => (this.humanBeing.push(data)));
     },
 
     maxElement: function (event) {
@@ -286,27 +261,35 @@ var app2 = new Vue({
         });
     },
 
-    quantityElement: function (even) {
-      let inputImpactSpeed = prompt("impactSpeed: ")
+    numberOfHumanBeinges: function (event) {
+      let inputImpactSpeed = prompt("Скорость удара: ")
+      if (!/^\+?(0|[1-9]\d*)$/.test(inputImpactSpeed)){
+        alert("Ошибка! Вы не ввели число");
+        return
+      }
       const headers = { "Content-Type": "application/json" };
       fetch(backendUrl + `/human/biggersThan?impactSpeed=${inputImpactSpeed}`, {
         method: "GET",
         headers
       })
         .then(response => response.json())
-        .then(data => alert(`Найдено ${data.length} элементов impactSpeed которых больше чем ${inputImpactSpeed}`));
+        .then(data => alert(`Найдено ${data.length} элементов, у которых скороть удара больше чем ${inputImpactSpeed}`));
     },
 
-    maxMoreElement: function (event) {
-        let inputImpactSpeed = prompt("impactSpeed: ")
-        const headers = { "Content-Type": "application/json" };
-        fetch(backendUrl + `/human/biggersThan?impactSpeed=${inputImpactSpeed}`, {
-          method: "GET",
-          headers
-        })
-          .then(response => response.json())
-          .then(data => (this.humanBeing = data));
-        alert("Поздравляю! Вы успешно вернули массив объектов impactSpeed, который больше заданного.");
+    maxNumberOfHumanBeinges: function (event) {
+      let inputImpactSpeed = prompt("Скорость удара: ")
+      if (!/^\+?(0|[1-9]\d*)$/.test(inputImpactSpeed)){
+        alert("Ошибка! Вы не ввели число");
+        return
+      }
+      const headers = { "Content-Type": "application/json" };
+      fetch(backendUrl + `/human/biggersThan?impactSpeed=${inputImpactSpeed}`, {
+        method: "GET",
+        headers
+      })
+        .then(response => response.json())
+        .then(data => (this.humanBeing = data));
+      alert("Поздравляю! Вы успешно вернули массив объектов impactSpeed, который больше заданного.");
     },
 
     setPages() {
@@ -322,7 +305,6 @@ var app2 = new Vue({
       let perPage = this.perPage;
       let from = (page * perPage) - perPage;
       let to = (page * perPage);
-      // console.log(from, to)
       return humanBeing.slice(from, to);
     }
 
@@ -348,7 +330,7 @@ var app2 = new Vue({
   },
 
   created() {
-    this.showAllElements();
+    this.showAllHumanBeings();
   },
 
   filters: {
@@ -356,6 +338,6 @@ var app2 = new Vue({
       return value.split(" ").splice(0, 20).join(" ") + '...';
     },
   }
-  
+
 })
 
