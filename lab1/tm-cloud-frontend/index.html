@@ -206,7 +206,7 @@
                                 <small class="d-block text-end mt-3">
                                     <input type="hidden" v-model="hiddenId" />
                                     <button type="button" class="btn btn-sm btn-outline-secondary"
-                                        v-on:click="saveHumanBeing($event)" @click="showModalAdd=false"><img src="ico/access.png" /></button>
+                                        v-on:click="saveHumanBeing($event)"><img src="ico/access.png" /></button>
                                 </small>
                             </div>
                         </div>
@@ -278,7 +278,7 @@
                                     <input type="hidden" v-model="hiddenId" />
                                     <button type="button" class="btn btn-sm btn-outline-secondary"
                                         v-on:click="removeHumanBeing($event, humanBeingById.id)"
-                                        @click="showModalId=false"><img src="ico/trash.png" /></button>
+                                        ><img src="ico/trash.png" /></button>
                                     <button type="button" class="btn btn-sm btn-outline-secondary"
                                         id="show-modal-button"
                                         @click="showModalEdit = true, itemId = humanBeingById.id">
@@ -374,7 +374,7 @@
                                 <small class="d-block text-end mt-3">
                                     <input type="hidden" v-model="hiddenId" />
                                     <button type="button" class="btn btn-sm btn-outline-secondary"
-                                        v-on:click="updateHumanBeing($event)" @click="showModalId=false, showModalEdit=false" >
+                                        v-on:click="updateHumanBeing($event)">
                                         <img src="ico/access.png" /></button>
                                     <button type="button" class="btn btn-sm btn-outline-secondary"
                                         data-bs-dismiss="modal" @click="showModalEdit = false, itemId = null">
