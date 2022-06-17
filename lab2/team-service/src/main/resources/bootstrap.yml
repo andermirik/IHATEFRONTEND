@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: tm-back-team
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8888
+
+management:
+  security:
+    enabled: false
+
+server:
+  port: ${PORT:8084}
