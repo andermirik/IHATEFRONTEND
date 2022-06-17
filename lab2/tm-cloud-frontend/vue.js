@@ -63,7 +63,7 @@ var app2 = new Vue({
       })
     },
 
-    removeHeroFromTeam: function (event, heroId) {
+    removeHeroFromTeam: function (event) {
       if (confirm("Вы уверены, что хотите удалить эти данные?")) {
         const headers = { "Content-Type": "application/json" };
         fetch(backendUrl + `/team/${this.teamById.id}/remove/${heroId}`, {
@@ -75,8 +75,8 @@ var app2 = new Vue({
       }
     },
 
-    addHeroToTeam: function (event, uu) {
-      let heroId = prompt(`Добавить героя в команду ${this.team.name} по уникальному идентификатору: `)
+    addHeroToTeam: function (event) {
+      let heroId = prompt(`Добавить героя в команду ${this.teamById.name} по уникальному идентификатору: `)
       if (!/^\+?(0|[1-9]\d*)$/.test(heroId)){
         alert("Ошибка! Вы не ввели число");
         return;
@@ -86,11 +86,22 @@ var app2 = new Vue({
         method: "POST",
         headers
       })
-        .then(response => response.json())
-        .then(data => alert(`Поздравляю! Герой успешно добавлен в команду.`));
+      .then(response => {
+        if(!response.ok) {
+          return response.text().then(text => { throw new Error(text) })
+         }
+        else {
+         return response.json();
+      }})
+        .then(data => alert(`Поздравляю! Герой успешно добавлен в команду.`))
+        .catch(err => {
+         alert('Ошибка! ' + ("" + err).slice(7));
+       });
+       this.findAll(null);
     },
 
     findById: function (event, id) {
+      console.log(id)
       const headers = { "Content-Type": "application/json" };
       fetch(backendUrl + `/team/${id}`, {
         method: "GET",
@@ -142,7 +153,7 @@ var app2 = new Vue({
       return team.slice(from, to);
     },
 
-    paginate(hero) {
+    paginateH(hero) {
       let pageH = this.pageH;
       let perPageH = this.perPageH;
       let from = (pageH * perPageH) - perPageH;
@@ -160,7 +171,8 @@ var app2 = new Vue({
     },
     
     displayedHero() {
-      return this.paginate(
+      return this.paginateH(
+        this.hero
       );
     }
 

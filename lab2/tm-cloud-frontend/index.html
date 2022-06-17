@@ -53,19 +53,23 @@
                             </table>
                         </div>
                         <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-end py-3">
+                            <ul class="pagination justify-content-end py-3 text-white">
+                                ddddddddddddddddddddddddddddd
                                 <li class="page-item">
-                                    <button type="button" class="page-link" v-if="page != 1" @click="page--"> Предыдущая
+                                    <button type="button" class="page-link" v-if="page != 1" @click="page--"> 
+                                        Предыдущая
                                     </button>
                                 </li>
                                 <li class="page-item">
                                     <button type="button" class="page-link"
                                         v-for="pageNumber in pages.slice(page - 1, page + 5)" @click="page = pageNumber">
-                                        {{ pageNumber }} </button>
+                                        {{ pageNumber }} 
+                                    </button>
                                 </li>
                                 <li class="page-item">
                                     <button type="button" class="page-link" @click="page++" v-if="page < pages.length">
-                                        Следующая </button>
+                                        Следующая 
+                                    </button>
                                 </li>
                             </ul>
                         </nav>
@@ -83,8 +87,8 @@
                                 <div class="modal-header">
                                     <button type="button" class="close" @click="showModalId = false">
                                         <span aria-hidden="true"><img src="ico/closed.png" /></span></button>
-                                    <h6 class="border-bottom pb-2 mb-0 text-secondary px-3 py-3"><strong>Подробная
-                                            информация</strong></h6>
+                                    <h6 class="border-bottom pb-2 mb-0 text-secondary px-3 py-3">
+                                        <strong>Подробная информация</strong></h6>
                                 </div>
                                 <div class="modal-body">
                                     <div class="card my-3 p-3 bg-body rounded shadow-sm">
@@ -114,11 +118,11 @@
                                         <small class="d-block text-end mt-3">
                                             <input type="hidden" v-model="hiddenId" />
                                             <button type="button" class="btn btn-sm btn-outline-secondary"
-                                                v-on:click="makeDepressive($event, item.id)" @click="showModalId = false"
+                                                v-on:click="makeDepressive($event)" @click="showModalId = false"
                                                 placeholder="Поменять героям в команде настроение на Печаль">
                                                 <img src="ico/sadsmile.png" /></button>
                                             <button class="btn btn-sm btn-outline-secondary"
-                                                v-on:click="addHeroToTeam($event, item.id)"
+                                                v-on:click="addHeroToTeam($event)"
                                                 placeholder="Добавить героя в команду">
                                                 <img src="ico/addhero.png" /></button>
                                         </small>

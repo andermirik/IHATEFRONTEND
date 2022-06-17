@@ -16,7 +16,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/human")
+@RequestMapping(value = "/human", produces = "application/json", consumes = "application/json")
 public class HumanBeingController {
 
     @Autowired
