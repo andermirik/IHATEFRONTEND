@@ -21,28 +21,18 @@
                 <div class="col-lg-6 col-md-8 mx-auto bg-dark">
                     <span>
                         <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary py-2 my-2"
-                            v-on:click="showAllElements($event)">Показать все элементы</button>
+                            v-on:click="showAllHumanBeings($event)">Показать всех людей</button>
                     </span>
                     <br>
                     <span>
                         <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary py-2 my-2"
-                            v-on:click="saveDummy($event)">Манекен</button>
+                            v-on:click="saveHumanBeingToDummy($event)">Манекен создания человека</button>
                     </span>
                     <br>
                     <span>
                         <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary py-2 my-2"
-                            @click="showModalAdd=true">Добавление нового элемента</button>
+                            @click="showModalAdd=true">Добавление нового человека</button>
                     </span>
-                    <!-- <br>
-                    <span>
-                        <div class="form-floating mb-3">
-                            <input v-model="inputId" type="text" class="form-control rounded-3" id="inputId"
-                                placeholder="Введите id">
-                            <label for="inputId">Id: </label>
-                            <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary py-2 my-2"
-                                v-on:click="getElement()">Получить элемент id {{ inputId }}</button>
-                        </div>
-                    </span> -->
                     <br>
                     <span v-if="humanBeingMax != null">
                         <div class="card">
@@ -64,7 +54,7 @@
                                         <td>{{humanBeingMax.impactSpeed}}</td>
                                         <td>
                                             <button class="btn btn-sm btn-outline-secondary" id="show-modal"
-                                                v-on:click="showById($event, humanBeingMax.id)"><img src="info.png" /></button>
+                                                v-on:click="showHumanBeingById($event, humanBeingMax.id)"><img src="ico/info.png" /></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -73,16 +63,14 @@
                     </span>
                     <span>
                         <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary py-2 my-2"
-                            v-on:click="quantityElement($event)">Вернуть количество объектов, значение поля
-                            impactSpeed которых
-                            больше заданного</button>
+                            v-on:click="numberOfHumanBeinges($event)">Вернуть количество людей, у которых скорость удара
+                            больше указанной</button>
                     </span>
                     <br>
                     <span>
                         <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary py-2 my-2"
-                            v-on:click="maxMoreElement($event)">Вернуть массив объектов, значение поля impactSpeed
-                            которых
-                            больше заданного</button>
+                            v-on:click="maxNumberOfHumanBeinges($event)">Вернуть список людей, у которых скорость удара
+                            больше указанной</button>
                     </span>
                     <div class="card">
                         <table class="table-sm">
@@ -92,15 +80,15 @@
                                   <th></th>
                                   <th v-bind:class = "(sortByName == 0)? '' : (sortByName == 1)? 'asc' : 'desc'"
                                   v-on:click="sortBy('name')">
-                                        Имя
+                                    Имя
                                     </th>
                                   <th  v-bind:class = "(sortByWeaponType == 0)? '' : (sortByWeaponType == 1)? 'asc' : 'desc'"
                                   v-on:click="sortBy('weaponType')">
-                                  Тип оружия
+                                    Тип оружия
                                 </th>
                                   <th  v-bind:class = "(sortByImpactSpeed == 0)? '' : (sortByImpactSpeed == 1)? 'asc' : 'desc'"
                                   v-on:click="sortBy('impactSpeed')">
-                                  Скорость удара
+                                    Скорость удара
                                 </th>
                                   <th></th>
                                 </tr>
@@ -113,7 +101,7 @@
                                     <td>{{item.impactSpeed}}</td>
                                     <td>
                                         <button class="btn btn-sm btn-outline-secondary" id="show-modal"
-                                            v-on:click="showById($event, item.id)"><img src="info.png" /></button>
+                                            v-on:click="showHumanBeingById($event, item.id)"><img src="ico/info.png" /></button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -145,8 +133,8 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" @click="showModalAdd=false">
-                                    <span aria-hidden="true"><img src="closed.png" /></span></button>
-                                <h6 class="border-bottom pb-2 mb-0 text-secondary px-3 py-3"><strong>Создать объект</strong></h6>
+                                    <span aria-hidden="true"><img src="ico/closed.png" /></span></button>
+                                <h6 class="border-bottom pb-2 mb-0 text-secondary px-3 py-3"><strong>Создать человека</strong></h6>
                             </div>
                             <div class="modal-body">
                                 <div class="form-floating mb-3">
@@ -218,7 +206,7 @@
                                 <small class="d-block text-end mt-3">
                                     <input type="hidden" v-model="hiddenId" />
                                     <button type="button" class="btn btn-sm btn-outline-secondary"
-                                        v-on:click="save($event)" @click="showModalAdd=false"><img src="access.png" /></button>
+                                        v-on:click="saveHumanBeing($event)" @click="showModalAdd=false"><img src="ico/access.png" /></button>
                                 </small>
                             </div>
                         </div>
@@ -236,7 +224,7 @@
                         <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" @click="showModalId=false">
-                                <span aria-hidden="true"><img src="closed.png" /></span></button>
+                                <span aria-hidden="true"><img src="ico/closed.png" /></span></button>
                                 <h6 class="border-bottom pb-2 mb-0 text-secondary px-3 py-3"><strong>Подробная информация</strong></h6>
                         </div>
                           <div class="modal-body">  
@@ -289,15 +277,12 @@
                                 <small class="d-block text-end mt-3">
                                     <input type="hidden" v-model="hiddenId" />
                                     <button type="button" class="btn btn-sm btn-outline-secondary"
-                                        v-on:click="removeElement($event, humanBeingById.id)"
-                                        @click="showModalId=false"><img src="trash.png" /></button>
+                                        v-on:click="removeHumanBeing($event, humanBeingById.id)"
+                                        @click="showModalId=false"><img src="ico/trash.png" /></button>
                                     <button type="button" class="btn btn-sm btn-outline-secondary"
                                         id="show-modal-button"
-                                        @click="showModalEdit = true, item_id = humanBeingById.id"><img
-                                            src="edit.png" /></button>
-                                    <!-- <button type="button" class="btn btn-sm btn-outline-secondary"
-                                        data-bs-dismiss="modal" @click="showModalId = false, item_id = null"><img
-                                            src="undo.png" /></button> -->
+                                        @click="showModalEdit = true, itemId = humanBeingById.id">
+                                        <img src="ico/edit.png" /></button>
                                 </small>
                             </div> 
                         </div>
@@ -315,7 +300,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" @click="showModalEdit=false; showModalId=false">
-                                    <span aria-hidden="true"><img src="closed.png" /></span></button>
+                                    <span aria-hidden="true"><img src="ico/closed.png" /></span></button>
                                 <h6 class="border-bottom pb-2 mb-0 text-secondary px-3 py-3"><strong>Редактировать
                                         информацию</strong></h6>
                             </div>
@@ -389,10 +374,11 @@
                                 <small class="d-block text-end mt-3">
                                     <input type="hidden" v-model="hiddenId" />
                                     <button type="button" class="btn btn-sm btn-outline-secondary"
-                                        v-on:click="updateElement($event)" @click="showModalId=false, showModalEdit=false" ><img src="access.png" /></button>
+                                        v-on:click="updateHumanBeing($event)" @click="showModalId=false, showModalEdit=false" >
+                                        <img src="ico/access.png" /></button>
                                     <button type="button" class="btn btn-sm btn-outline-secondary"
-                                        data-bs-dismiss="modal" @click="showModalEdit = false, item_id = null"><img
-                                            src="undo.png" /></button>
+                                        data-bs-dismiss="modal" @click="showModalEdit = false, itemId = null">
+                                        <img src="ico/undo.png" /></button>
                                 </small>
                             </div>
                         </div>

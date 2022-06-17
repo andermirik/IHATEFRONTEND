@@ -1,12 +1,12 @@
-/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/enums/WeaponType.java
-/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/model/Coordinates.java
-/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/config/WebConfig.java
-/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/model/Car.java
-/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/enums/Mood.java
-/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/model/HumanBeing.java
-/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/config/JacksonConfiguration.java
-/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/repository/HumanBeingRepository.java
-/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/config/MyWebInitializer.java
-/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/controller/HumanBeingController.java
-/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/dao/HumanBeingDao.java
-/Users/mirik/Desktop/pet/tm-cloud/src/main/java/ru/itmo/lab/config/HibernateConf.java
+C:\Users\dimap\OneDrive\Рабочий стол\push\IHATEFRONTEND\lab1\tm-cloud-backend\src\main\java\ru\itmo\lab\model\Car.java
+C:\Users\dimap\OneDrive\Рабочий стол\push\IHATEFRONTEND\lab1\tm-cloud-backend\src\main\java\ru\itmo\lab\config\MyWebInitializer.java
+C:\Users\dimap\OneDrive\Рабочий стол\push\IHATEFRONTEND\lab1\tm-cloud-backend\src\main\java\ru\itmo\lab\config\WebConfig.java
+C:\Users\dimap\OneDrive\Рабочий стол\push\IHATEFRONTEND\lab1\tm-cloud-backend\src\main\java\ru\itmo\lab\enums\Mood.java
+C:\Users\dimap\OneDrive\Рабочий стол\push\IHATEFRONTEND\lab1\tm-cloud-backend\src\main\java\ru\itmo\lab\model\Coordinates.java
+C:\Users\dimap\OneDrive\Рабочий стол\push\IHATEFRONTEND\lab1\tm-cloud-backend\src\main\java\ru\itmo\lab\config\JacksonConfiguration.java
+C:\Users\dimap\OneDrive\Рабочий стол\push\IHATEFRONTEND\lab1\tm-cloud-backend\src\main\java\ru\itmo\lab\controller\HumanBeingController.java
+C:\Users\dimap\OneDrive\Рабочий стол\push\IHATEFRONTEND\lab1\tm-cloud-backend\src\main\java\ru\itmo\lab\model\HumanBeing.java
+C:\Users\dimap\OneDrive\Рабочий стол\push\IHATEFRONTEND\lab1\tm-cloud-backend\src\main\java\ru\itmo\lab\repository\HumanBeingRepository.java
+C:\Users\dimap\OneDrive\Рабочий стол\push\IHATEFRONTEND\lab1\tm-cloud-backend\src\main\java\ru\itmo\lab\dao\HumanBeingDao.java
+C:\Users\dimap\OneDrive\Рабочий стол\push\IHATEFRONTEND\lab1\tm-cloud-backend\src\main\java\ru\itmo\lab\enums\WeaponType.java
+C:\Users\dimap\OneDrive\Рабочий стол\push\IHATEFRONTEND\lab1\tm-cloud-backend\src\main\java\ru\itmo\lab\config\HibernateConf.java
