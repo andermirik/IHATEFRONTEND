@@ -242,6 +242,11 @@ var app2 = new Vue({
     },
 
     maxElement: function (event) {
+      let inputImpactSpeed = prompt("Скорость удара: ")
+      if (!/^\+?(0|[1-9]\d*)$/.test(inputImpactSpeed)){
+        alert("Ошибка! Вы не ввели число");
+        return
+      }
       const headers = { "Content-Type": "application/json" };
       fetch(backendUrl + `/human/fastest`, {
         method: "GET",
