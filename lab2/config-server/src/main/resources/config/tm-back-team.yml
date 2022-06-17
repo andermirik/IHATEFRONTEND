@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: tm-back-team
+  jpa:
+    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    generate-ddl: false
+    properties:
+      hibernate:
+        show_sql=true:
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+    url: jdbc:postgresql://${DB_HOST:db}:${DB_PORT:5432}/postgres?currentSchema=team
+    driver-class-name: org.postgresql.Driver
+
+jwt:
+  secret: IHATECOMPUTERSCIENCE
+
+
+feign:
+  client:
+    url:
+      hero-client: ${HERO_CLIENT_URL:localhost:8080}
+
+

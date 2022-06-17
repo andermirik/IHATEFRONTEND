@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: zuul-server
+
+zuul:
+  routes:
+    tm-back-team:
+      path: /tm-back-team/**
+      serviceId: tm-back-team
+      stripPrefix: false
+      sensitiveHeaders:

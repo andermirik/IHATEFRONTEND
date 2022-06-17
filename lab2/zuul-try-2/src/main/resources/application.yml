@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: zuul
+#  cloud:
+#    config:
+#      enabled: true
+#      uri: http://${CONFIG_URL:localhost:8888}
+
+eureka:
+  client:
+    serviceUrl:
+      registerWithEureka: false
+      fetchRegistry: true
+      defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka
+  instance:
+    preferIpAddress: true
+
+zuul:
+  routes:
+    tm-back-team:
+      path: /tm-back-team/**
+      serviceId: tm-back-team
+      stripPrefix: false
+      sensitiveHeaders:
+
+management:
+  security:
+    enabled: false
+
+server:
+  port: ${PORT:9099}
+
