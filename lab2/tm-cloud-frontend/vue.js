@@ -1,31 +1,32 @@
-var backendUrl = "http://192.168.3.3:8084"
+var backendUrl = "http://labvm-42-02.itmo-lab.cosm-lab.science:9093"
+// var backendUrl = "http://192.168.3.3:8084"
 // var backendUrl = "http://labvm-42-02.itmo-lab.cosm-lab.science:8080"
 
 var app2 = new Vue({
   el: '#container',
   data: {
     team: [],
+    teamById: null,
     teamSave:  {
       name: "",
     },
-    humanBeingById: null,
-    showModalAdd: false,
+    hero: [],
     showModalEdit: false,
     showModalId: false,
-
-    teamById: null,
     hiddenId: null,
     posts: [''],
     page: 1,
     perPage: 9,
     pages: [],
-    // postsH: [''],
-    // pageH: 1,
-    // perPageH: 9,
-    // pagesH: [],
+
+    postsH: [''],
+    pageH: 1,
+    perPageH: 9,
+    pagesH: [],
   },
   methods: {
-    showAllTeams: function (event) {
+    
+    findAll: function (event) {
       const headers = { "Content-Type": "application/json" };
       fetch(backendUrl + "/team", {
         method: "GET",
@@ -35,19 +36,12 @@ var app2 = new Vue({
         .then(data => (this.team = data)); 
     },
 
-    saveTeamToDummy: function (event) {
-      const headers = { "Content-Type": "application/json" };
-      fetch(backendUrl + "/team/saveDummy", {
-        method: "POST",
-        headers
-      })
-        .then(response => response.json())
-        .then(data => (this.team = data)); 
-    },
-
-    saveTeam: function (event) {
+    makeTeam: function (event) {
       var teamName = prompt("Введите имя команды: ");
-      if(teamName == null || teamName.trim() === "") { 
+      if(teamName == null){
+        return; 
+      }
+      if(teamName.trim() === "") { 
         alert("Имя команды должно быть обязательно заполненым.")
         return; 
       }
@@ -62,29 +56,41 @@ var app2 = new Vue({
       })
       .then(response => {
         console.log(response)
-        this.showAllTeams(null);
+        this.findAll(null);
       })
       .catch( err => {
-        if (this.teamSave.name != null && this.teamSave.name.trim() == ""){ 
-          alert("Ошибка! Имя команды не должно быть пустым.");
-        }else alert("Попробуй еще раз");
+        alert("Попробуй еще раз");
       })
     },
 
-    removeHeroTheTeam: function (event, id) {
+    removeHeroFromTeam: function (event, heroId) {
       if (confirm("Вы уверены, что хотите удалить эти данные?")) {
         const headers = { "Content-Type": "application/json" };
-        fetch(backendUrl + `/${teamId}/remove/${heroId}`, {
+        fetch(backendUrl + `/team/${this.teamById.id}/remove/${heroId}`, {
           method: "DELETE",
           headers
         })
           .then(response => (this.team = this.team.filter(item => (item.id != id)))); 
-        setTimeout(() => alert("Поздравляю! Вы успешно удалили героя из команды."), 30);
-
+          setTimeout(() => alert("Поздравляю! Вы успешно удалили героя из команды."), 30);
       }
     },
 
-    showTeamById: function (event, id) {
+    addHeroToTeam: function (event, uu) {
+      let heroId = prompt(`Добавить героя в команду ${this.team.name} по уникальному идентификатору: `)
+      if (!/^\+?(0|[1-9]\d*)$/.test(heroId)){
+        alert("Ошибка! Вы не ввели число");
+        return;
+      }
+      const headers = { "Content-Type": "application/json" };
+      fetch(backendUrl + `/team/${this.teamById.id}/add/${heroId}`, {
+        method: "POST",
+        headers
+      })
+        .then(response => response.json())
+        .then(data => alert(`Поздравляю! Герой успешно добавлен в команду.`));
+    },
+
+    findById: function (event, id) {
       const headers = { "Content-Type": "application/json" };
       fetch(backendUrl + `/team/${id}`, {
         method: "GET",
@@ -98,32 +104,18 @@ var app2 = new Vue({
         });
     },
 
-    changeTheMoodSorrow: function (event, id) {
+    makeDepressive: function (event, teamId) {
       const headers = { "Content-Type": "application/json" };
-      fetch(backendUrl + `/team/${id}`, {
-        method: "GET",
-        headers
+      fetch(backendUrl + `/${teamId}/make-depressive`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify(this.teamId)
       })
         .then(response => response.json())
         .then(data => {
-          this.humanBeingById = data;
+          this.team = data;
           this.showModalId = true;
         });
-    },
-
-    addHeroToTeam: function (event, teamId) {
-      let heroId = prompt(`Добавить героя в команду ${this.team.name} по уникальному идентификатору: `)
-      if (!/^\+?(0|[1-9]\d*)$/.test(heroId)){
-        alert("Ошибка! Вы не ввели число");
-        return
-      }
-      const headers = { "Content-Type": "application/json" };
-      fetch(backendUrl + `/team/${this.teamById.id}/add/${heroId}`, {
-        method: "POST",
-        headers
-      })
-        .then(response => response.json())
-        .then(data => alert(`Поздравляю! Герой успешно добавлен в команду.`));
     },
 
     setPages() {
@@ -134,12 +126,28 @@ var app2 = new Vue({
       }
     },
 
+    setPages() {
+      let numberOfPagesH = Math.ceil(this.hero.length / this.perPageH);
+      this.pagesH = []
+      for (let index = 1; index <= numberOfPagesH; index++) {
+        this.pagesH.push(index);
+      }
+    },
+
     paginate(team) {
       let page = this.page;
       let perPage = this.perPage;
       let from = (page * perPage) - perPage;
       let to = (page * perPage);
       return team.slice(from, to);
+    },
+
+    paginate(hero) {
+      let pageH = this.pageH;
+      let perPageH = this.perPageH;
+      let from = (pageH * perPageH) - perPageH;
+      let to = (pageH * perPageH);
+      return hero.slice(from, to);
     }
 
   },
@@ -151,10 +159,10 @@ var app2 = new Vue({
       );
     },
     
-  //   // displayedHero() {
-  //   //   return this.paginate(
-  //   //   );
-  //   // }
+    displayedHero() {
+      return this.paginate(
+      );
+    }
 
   },
 
@@ -162,13 +170,13 @@ var app2 = new Vue({
     team() {
       this.setPages();
     },
-    // humanBeing() {
-    //   this.setPages();
-    // }
+    hero() {
+      this.setPagesH();
+    }
   },
 
   created() {
-    this.showAllTeams();
+    this.findAll();
   }
   
 })

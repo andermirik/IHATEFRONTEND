@@ -143,19 +143,15 @@ var app2 = new Vue({
     },
 
     saveHumanBeing: function (event) {
-
       if (this.humanBeingSave.impactSpeed === "") {
         this.humanBeingSave.impactSpeed = 0;
       }
-
       if (this.humanBeingSave.coordinates.x === "") {
         this.humanBeingSave.coordinates.x = 0;
       }
-
       if (this.humanBeingSave.coordinates.y === "") {
         this.humanBeingSave.coordinates.y = 0;
       }
-
       const headers = { "Content-Type": "application/json" };
       fetch(backendUrl + "/human/save", {
         method: "POST",
@@ -182,19 +178,15 @@ var app2 = new Vue({
     },
 
     updateHumanBeing: function (event) {
-
       if (this.humanBeingSave.impactSpeed === "") {
         this.humanBeingSave.impactSpeed = 0;
       }
-
       if (this.humanBeingSave.coordinates.x === "") {
         this.humanBeingSave.coordinates.x = 0;
       }
-
       if (this.humanBeingSave.coordinates.y === "") {
         this.humanBeingSave.coordinates.y = 0;
       }
-
       if (confirm("Вы уверены, что хотите обновить эти данные?")) {
         const headers = { "Content-Type": "application/json" };
         fetch(backendUrl + "/human/update", {
