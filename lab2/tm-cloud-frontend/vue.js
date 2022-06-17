@@ -10,19 +10,13 @@ var app2 = new Vue({
     teamSave:  {
       name: "",
     },
-    hero: [],
     showModalEdit: false,
     showModalId: false,
     hiddenId: null,
     posts: [''],
     page: 1,
     perPage: 9,
-    pages: [],
-
-    postsH: [''],
-    pageH: 1,
-    perPageH: 9,
-    pagesH: [],
+    pages: []
   },
   methods: {
     
@@ -63,14 +57,15 @@ var app2 = new Vue({
       })
     },
 
-    removeHeroFromTeam: function (event) {
+    removeHeroFromTeam: function (event, heroId) {
+      console.log(heroId)
       if (confirm("Вы уверены, что хотите удалить эти данные?")) {
         const headers = { "Content-Type": "application/json" };
         fetch(backendUrl + `/team/${this.teamById.id}/remove/${heroId}`, {
-          method: "DELETE",
+          method: "POST",
           headers
         })
-          .then(response => (this.team = this.team.filter(item => (item.id != id)))); 
+          .then(response => (this.team = this.team.filter(item => (item.id != heroId)))); 
           setTimeout(() => alert("Поздравляю! Вы успешно удалили героя из команды."), 30);
       }
     },
@@ -93,11 +88,15 @@ var app2 = new Vue({
         else {
          return response.json();
       }})
-        .then(data => alert(`Поздравляю! Герой успешно добавлен в команду.`))
+        .then(data => {
+          this.teamById = data
+          this.hero = this.teamById.heroes
+          alert("Поздравляю! Вы успешно сохранили героя в команду.");
+          this.findAll(null);
+        })
         .catch(err => {
          alert('Ошибка! ' + ("" + err).slice(7));
        });
-       this.findAll(null);
     },
 
     findById: function (event, id) {
@@ -115,17 +114,16 @@ var app2 = new Vue({
         });
     },
 
-    makeDepressive: function (event, teamId) {
+    makeDepressive: function (event) {
+      let id = this.teamById.id
       const headers = { "Content-Type": "application/json" };
-      fetch(backendUrl + `/${teamId}/make-depressive`, {
+      fetch(`http://labvm-42-02.itmo-lab.cosm-lab.science:9093/team/${id}/make-depressive`, {
         method: "POST",
         headers,
-        body: JSON.stringify(this.teamId)
       })
         .then(response => response.json())
         .then(data => {
-          this.team = data;
-          this.showModalId = true;
+          alert('Всем грустно :C')
         });
     },
 
@@ -137,30 +135,13 @@ var app2 = new Vue({
       }
     },
 
-    setPages() {
-      let numberOfPagesH = Math.ceil(this.hero.length / this.perPageH);
-      this.pagesH = []
-      for (let index = 1; index <= numberOfPagesH; index++) {
-        this.pagesH.push(index);
-      }
-    },
-
     paginate(team) {
       let page = this.page;
       let perPage = this.perPage;
       let from = (page * perPage) - perPage;
       let to = (page * perPage);
       return team.slice(from, to);
-    },
-
-    paginateH(hero) {
-      let pageH = this.pageH;
-      let perPageH = this.perPageH;
-      let from = (pageH * perPageH) - perPageH;
-      let to = (pageH * perPageH);
-      return hero.slice(from, to);
     }
-
   },
 
   computed: {
@@ -168,22 +149,12 @@ var app2 = new Vue({
       return this.paginate(
         this.team
       );
-    },
-    
-    displayedHero() {
-      return this.paginateH(
-        this.hero
-      );
     }
-
   },
 
   watch: {
     team() {
       this.setPages();
-    },
-    hero() {
-      this.setPagesH();
     }
   },
 

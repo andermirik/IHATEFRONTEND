@@ -53,22 +53,22 @@
                             </table>
                         </div>
                         <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-end py-3 text-white">
-                                ddddddddddddddddddddddddddddd
+                            <ul class="pagination justify-content-end py-3">
                                 <li class="page-item">
-                                    <button type="button" class="page-link" v-if="page != 1" @click="page--"> 
-                                        Предыдущая
+                                    <button type="button" class="page-link" 
+                                        v-if="page != 1" @click="page--"> Предыдущая
                                     </button>
                                 </li>
                                 <li class="page-item">
                                     <button type="button" class="page-link"
-                                        v-for="pageNumber in pages.slice(page - 1, page + 5)" @click="page = pageNumber">
+                                        v-for="pageNumber in pages.slice(page - 1, page + 5)" 
+                                        @click="page = pageNumber">
                                         {{ pageNumber }} 
                                     </button>
                                 </li>
                                 <li class="page-item">
-                                    <button type="button" class="page-link" @click="page++" v-if="page < pages.length">
-                                        Следующая 
+                                    <button type="button" class="page-link" 
+                                    @click="page++" v-if="page < pages.length"> Следующая 
                                     </button>
                                 </li>
                             </ul>
@@ -88,7 +88,8 @@
                                     <button type="button" class="close" @click="showModalId = false">
                                         <span aria-hidden="true"><img src="ico/closed.png" /></span></button>
                                     <h6 class="border-bottom pb-2 mb-0 text-secondary px-3 py-3">
-                                        <strong>Подробная информация</strong></h6>
+                                        <strong>Подробная информация</strong>
+                                    </h6>
                                 </div>
                                 <div class="modal-body">
                                     <div class="card my-3 p-3 bg-body rounded shadow-sm">
@@ -101,9 +102,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="(item, i) in displayedHero">
+                                                <tr v-for="(item, i) in teamById.heroes">
                                                     <td>{{ item.id }}</td>
-                                                    <td>{{ item.titleHero }}</td>
+                                                    <td>{{ item.id }}</td>
                                                     <td>
                                                         <button type="button" class="btn btn-sm btn-outline-secondary"
                                                             v-on:click="removeHeroFromTeam($event, item.id)"
@@ -126,24 +127,24 @@
                                                 placeholder="Добавить героя в команду">
                                                 <img src="ico/addhero.png" /></button>
                                         </small>
-                                        <nav aria-label="Page navigation example">
-                                            <ul class="pagination justify-content-end py-3">
-                                                <li class="page-item">
-                                                    <button type="button" class="page-link" v-if="pageH != 1"
-                                                        @click="pageH--"> Предыдущая </button>
-                                                </li>
-                                                <li class="page-item">
-                                                    <button type="button" class="page-link"
-                                                        v-for="pageNumber in pagesH.slice(pageH - 1, pageH + 5)"
-                                                        @click="pageH = pageNumber"> {{ pageNumber }} </button>
-                                                </li>
-                                                <li class="page-item">
-                                                    <button type="button" class="page-link" @click="pageH++"
-                                                        v-if="pageH < pagesH.length"> Следующая </button>
-                                                </li>
-                                            </ul>
-                                        </nav>
                                     </div>
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-end py-3">
+                                            <li class="page-item">
+                                                <button type="button" class="page-link" v-if="pageH != 1"
+                                                    @click="pageH--"> Предыдущая </button>
+                                            </li>
+                                            <li class="page-item">
+                                                <button type="button" class="page-link"
+                                                    v-for="pageNumber in pagesH.slice(pageH - 1, pageH + 5)"
+                                                    @click="pageH = pageNumber"> {{ pageNumber }} </button>
+                                            </li>
+                                            <li class="page-item">
+                                                <button type="button" class="page-link" @click="pageH++"
+                                                    v-if="pageH < pagesH.length"> Следующая </button>
+                                            </li>
+                                        </ul>
+                                    </nav>
                                 </div>
                             </div>
                         </div>
