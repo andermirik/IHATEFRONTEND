@@ -7,4 +7,8 @@ public interface HeroRepository extends JpaRepository<Hero, Long> {
 
     void deleteHeroByTeamIdAndHeroId(Long teamId, Long heroId);
 
+    Hero findFirstByHeroId(Long heroId);
+
+    Hero findFirstByTeamIdAndHeroId(Long teamId, Long heroId);
+
 }

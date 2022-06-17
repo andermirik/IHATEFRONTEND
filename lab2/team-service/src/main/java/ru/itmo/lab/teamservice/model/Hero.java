@@ -1,25 +1,25 @@
 package ru.itmo.lab.teamservice.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Hero {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
 
     @Column
-    Long heroId;
+    private Long heroId;
 
     @ManyToOne
-    Team team;
+    private Team team;
 }

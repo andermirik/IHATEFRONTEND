@@ -1,6 +1,7 @@
 package ru.itmo.lab.teamservice.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.itmo.lab.teamservice.model.HumanBeing;
 
@@ -30,7 +31,7 @@ public interface HumanBeingClient {
     @PostMapping("/update")
     HumanBeing update(@RequestBody HumanBeing human);
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     HumanBeing findById(@PathVariable Long id);
 
     @DeleteMapping("/{id}")

@@ -16,7 +16,7 @@ import java.util.Objects;
 @NoArgsConstructor
 public class Team {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -24,8 +24,9 @@ public class Team {
     private String name;
 
     @OneToMany
+    @JoinColumn(name = "team_id")
     @Column
-    private List<Hero> humans;
+    private List<Hero> heroes;
 
     @Override
     public boolean equals(Object o) {
