@@ -19,6 +19,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 @Entity
+@Table(name="humanbeing")
 public class HumanBeing {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,22 +35,22 @@ public class HumanBeing {
     private Coordinates coordinates;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", timezone = "UTC")
-    @Column(name = "creationDate", nullable = false)
+    @Column(name = "creationdate", nullable = false)
     private Instant creationDate;
 
-    @Column(name = "realHero", nullable = false)
+    @Column(name = "realhero", nullable = false)
     private Boolean realHero;
 
-    @Column(name = "hasToothpick")
+    @Column(name = "hastoothpick")
     private boolean hasToothpick;
 
     @Max(759)
     @Min(0)
-    @Column(name = "impactSpeed")
+    @Column(name = "impactspeed")
     private float impactSpeed;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "weaponType", nullable = false)
+    @Column(name = "weapontype", nullable = false)
     private WeaponType weaponType;
 
     @Enumerated(EnumType.STRING)

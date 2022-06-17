@@ -1,0 +1,16 @@
+
+_
+java:S2094"BRemove this empty class, write its code or make it an "interface".(‚˜‘ 8×¹ù—0
+X	java:S125"<This block of commented-out lines of code should be removed.(’Š½Ÿ8Ù¹ù—0
+t
+java:S1128"RRemove this unused import 'com.fasterxml.jackson.databind.DeserializationFeature'.(ÌòÔ¹üÿÿÿÿ8Ú¹ù—0
+f
+java:S1128"IRemove this unused import 'com.fasterxml.jackson.databind.MapperFeature'.(’ü›8Ú¹ù—0
+e
+java:S1128"HRemove this unused import 'com.fasterxml.jackson.databind.ObjectMapper'.(´‘¨™8Ú¹ù—0
+n
+java:S1128"QRemove this unused import 'com.fasterxml.jackson.datatype.jsr310.JavaTimeModule'.(§ ’ÿ8Ú¹ù—0
+e
+java:S1128"HRemove this unused import 'org.springframework.context.annotation.Bean'.(‚î‰Ş8Ú¹ù—0
+s
+java:S1128"QRemove this unused import 'org.springframework.context.annotation.Configuration'.(¬²Úäşÿÿÿÿ8Ú¥ù—0

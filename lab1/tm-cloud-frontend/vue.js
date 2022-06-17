@@ -1,5 +1,5 @@
-var backendUrl = "http://localhost:8080"
-// var backendUrl = "http://labvm-42-02.itmo-lab.cosm-lab.science:8080"
+//var backendUrl = "http://localhost:8080"
+var backendUrl = "http://labvm-42-02.itmo-lab.cosm-lab.science:8080"
 
 var app2 = new Vue({
   el: '#container',
@@ -242,11 +242,6 @@ var app2 = new Vue({
     },
 
     maxElement: function (event) {
-      let inputImpactSpeed = prompt("Скорость удара: ")
-      if (!/^\+?(0|[1-9]\d*)$/.test(inputImpactSpeed)){
-        alert("Ошибка! Вы не ввели число");
-        return
-      }
       const headers = { "Content-Type": "application/json" };
       fetch(backendUrl + `/human/fastest`, {
         method: "GET",

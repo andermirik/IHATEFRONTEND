@@ -7,15 +7,15 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 public class JacksonConfiguration {
 
-    @Bean
-    public ObjectMapper objectMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        mapper.configure(MapperFeature.DEFAULT_VIEW_INCLUSION, true);
-        mapper.registerModule(new JavaTimeModule());
-        return mapper;
-    }
+//    @Bean
+//    public ObjectMapper objectMapper() {
+//        ObjectMapper mapper = new ObjectMapper();
+//        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+//        mapper.configure(MapperFeature.DEFAULT_VIEW_INCLUSION, true);
+//        mapper.registerModule(new JavaTimeModule());
+//        return mapper;
+//    }
 }
