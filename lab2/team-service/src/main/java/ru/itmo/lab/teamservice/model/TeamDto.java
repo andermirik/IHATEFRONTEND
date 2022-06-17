@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 @Builder
 public class TeamDto {
+    Long id;
     String name;
     List<HeroDto> heroes;
 }

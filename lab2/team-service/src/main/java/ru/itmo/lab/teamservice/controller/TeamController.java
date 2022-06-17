@@ -125,10 +125,12 @@ public class TeamController extends ResponseEntityExceptionHandler {
 
         if(team.getHeroes() == null)
             return TeamDto.builder()
+                    .id(team.getId())
                     .name(team.getName())
                     .build();
 
         return TeamDto.builder()
+                .id(team.getId())
                 .name(team.getName())
                 .heroes(team.getHeroes().stream().map(this::toDto).toList())
                 .build();
