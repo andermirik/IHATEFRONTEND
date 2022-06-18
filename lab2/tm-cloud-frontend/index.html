@@ -27,7 +27,7 @@
                             </span>
                             <br>
                             <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary py-2 my-2"
-                                @click="makeTeam($event)">Добавление новой команды</button>
+                                @click="showModalAdd=true">Добавление новой команды</button>
                         </span>
                         <div class="card">
                             <table class="table-sm">
@@ -79,6 +79,38 @@
             <br>
             <br>
             <br>
+            <div class="b-example-divider"></div>
+            <div v-if="showModalAdd">
+                <div class="modal-mask">
+                    <div class="modal-wrapper">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" @click="showModalAdd=false">
+                                        <span aria-hidden="true"><img src="ico/closed.png" /></span></button>
+                                    <h6 class="border-bottom pb-2 mb-0 text-secondary px-3 py-3"><strong>Создать команду</strong></h6>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-floating mb-3">
+                                        <input v-model="teamSave.name" type="text" class="form-control rounded-3" id="inputName"
+                                            placeholder="name">
+                                        <label for="inputName">Имя команды: </label>
+                                    </div>
+                                    <br />
+                                    <small class="d-block text-end mt-3">
+                                        <input type="hidden" v-model="hiddenId" />
+                                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                            v-on:click="makeTeam($event)"><img src="ico/access.png" /></button>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
             <div v-if="showModalId">
                 <div class="modal-mask">
                     <div class="modal-wrapper">
@@ -97,13 +129,13 @@
                                             <thead>
                                                 <tr class="text text-center">
                                                     <th></th>
-                                                    <th>Имя героя</th>
+                                                    <th>Уникальный индентификатор героя</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr v-for="(item, i) in teamById.heroes">
-                                                    <td>{{ item.id }}</td>
+                                                    <td></td>
                                                     <td>{{ item.id }}</td>
                                                     <td>
                                                         <button type="button" class="btn btn-sm btn-outline-secondary"

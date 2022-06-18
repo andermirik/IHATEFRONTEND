@@ -139,7 +139,7 @@ var app2 = new Vue({
       })
         .then(response => response.json())
         .then(data => (this.humanBeing = data));
-      this.maxElement();
+        this.maxElement();
     },
 
     saveHumanBeing: function (event) {
@@ -166,6 +166,7 @@ var app2 = new Vue({
           console.log(response)
           alert("Поздравляю! Вы успешно сохранили информацию о человеке.");
           this.showAllHumanBeings(null);
+          this.showModalAdd = false;
         })
         .catch(err => {
           console.log(err)
@@ -201,6 +202,7 @@ var app2 = new Vue({
           .then(response => {
             this.showAllHumanBeings();
             alert("Поздравляю! Вы успешно обновили информацию о человеке.");
+            this.showModalEdit = false;
           })
           .catch(err => {
             console.log(err)
