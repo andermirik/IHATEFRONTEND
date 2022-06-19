@@ -13,26 +13,26 @@ services:
     ports:
       - "5432:5432"
 
-  # front:
-  #   image: andermirik/tm-front:1.3.1
-  #   restart: unless-stopped
-  #   ports:
-  #     - "80:80"
+  front:
+    image: andermirik/tm-front
+    restart: unless-stopped
+    ports:
+      - "80:80"
 
-  # back:
-  #   image: "andermirik/tm-back:1"
-  #   restart: unless-stopped
-  #   networks:
-  #     - default
-  #   environment:
-  #     DB_PORT: 5432
-  #     DB_HOST: db
-  #     DB_USER: postgres
-  #     DB_PASSWORD: postgres
-  #   ports:
-  #     - "8080:8080"
-  #   depends_on:
-  #     - db
+  back:
+    image: "andermirik/tm-back:1"
+    restart: unless-stopped
+    networks:
+      - default
+    environment:
+      DB_PORT: 5432
+      DB_HOST: db
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
 
   service1:
     image: "tm-back:hero-2.5"
