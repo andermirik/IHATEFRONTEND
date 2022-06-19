@@ -37,8 +37,6 @@ services:
       DB_PASSWORD: postgres
     ports:
       - "8080:8080"
-    depends_on:
-      - db
 
   hero_service:
     image: "andermirik/tm-back:hero-latest"
@@ -57,9 +55,6 @@ services:
       CONSUL_PORT: 8500
     ports:
       - "9091-9092:8080"
-    depends_on:
-      - db
-      - consul
 
   consul:
     image: consul
@@ -74,8 +69,6 @@ services:
       ports:
         - "9098:8080"
         - "1936:1936"
-      depends_on: 
-        - consul
 
   eureka:
     image: andermirik/tm-back:eureka-latest
@@ -97,9 +90,6 @@ services:
       CONFIG_URL: config:8888
     ports:
       - "9099:9099"
-    depends_on:
-      - eureka
-      - config
 
   config:
     image: andermirik/tm-back:config-latest
@@ -127,9 +117,6 @@ services:
       HERO_CLIENT_URL: haproxy:8080
     ports:
       - "8084:8080"
-    depends_on:
-      - eureka
-      - db
 
 networks:
   default:
