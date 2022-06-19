@@ -41,7 +41,7 @@ services:
       - db
 
   service1:
-    image: "tm-back:hero-2.5"
+    image: "andermirik/tm-back:hero-latest"
     restart: unless-stopped
     #build: lab2/tm-cloud-backend
     environment:
@@ -58,7 +58,7 @@ services:
       - consul
 
   service2:
-    image: "tm-back:hero-2.5"
+    image: "andermirik/tm-back:hero-latest"
     restart: unless-stopped
     #build: lab2/tm-cloud-backend
     environment:
@@ -91,7 +91,7 @@ services:
         - consul
 
   eureka:
-    image: eureka:docker
+    image: andermirik/tm-back:eureka-latest
     restart: unless-stopped
     environment:
       PORT: 8761
@@ -100,7 +100,7 @@ services:
 
   zuul:
     container_name: zuul
-    image: zuul:docker
+    image: andermirik/tm-back:zuul-latest
     restart: unless-stopped
  #   build: ./lab2/zuul-try-2
     environment:
@@ -115,7 +115,7 @@ services:
       - config
 
   config:
-    image: config-server:docker
+    image: andermirik/tm-back:config-latest
    # build: lab2/config-server
     restart: unless-stopped
     environment:
@@ -125,7 +125,7 @@ services:
       - "8888:8888"
 
   team_service:
-    image: "tm-back:team-2.2"
+    image: "andermirik/tm-back:team-latest"
     restart: unless-stopped
     #build: lab2/tm-cloud-backend
     environment:
