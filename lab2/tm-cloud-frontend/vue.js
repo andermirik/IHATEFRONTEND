@@ -1,5 +1,5 @@
-var backendUrl = "http://labvm-42-02.itmo-lab.cosm-lab.science:9093"
-// var backendUrl = "http://192.168.3.3:8084"
+//var backendUrl = "http://labvm-42-02.itmo-lab.cosm-lab.science:9093"
+ var backendUrl = "http://192.168.3.3:8084"
 // var backendUrl = "http://labvm-42-02.itmo-lab.cosm-lab.science:8080"
 
 var app2 = new Vue({
@@ -117,13 +117,22 @@ var app2 = new Vue({
     makeDepressive: function (event) {
       let id = this.teamById.id
       const headers = { "Content-Type": "application/json" };
-      fetch(`http://labvm-42-02.itmo-lab.cosm-lab.science:9093/team/${id}/make-depressive`, {
+      fetch(backendUrl + `/team/${id}/make-depressive`, {
         method: "POST",
         headers,
       })
-        .then(response => response.json())
+      .then(response => {
+        if(!response.ok) {
+          return response.text().then(text => { throw new Error(text) })
+         }
+        else {
+         return response.json();
+      }})
         .then(data => {
           alert('Всем грустно :C')
+        })
+        .catch(err => {
+          alert('Ошибка! ' + ("" + err).slice(7));
         });
     },
 
