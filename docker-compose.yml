@@ -14,10 +14,16 @@ services:
       - "5432:5432"
 
   front:
-    image: andermirik/tm-front
+    image: andermirik/tm-front:lab1-latest
     restart: unless-stopped
     ports:
       - "80:80"
+
+  front2:
+    image: andermirik/tm-front:lab2-latest
+    restart: unless-stopped
+    ports:
+      - "9093:80"
 
   back:
     image: "andermirik/tm-back:1"
