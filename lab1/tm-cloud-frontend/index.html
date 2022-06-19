@@ -278,7 +278,7 @@
                                     <input type="hidden" v-model="hiddenId" />
                                     <button type="button" class="btn btn-sm btn-outline-secondary"
                                         v-on:click="removeHumanBeing($event, humanBeingById.id)"
-                                        ><img src="ico/trash.png" /></button>
+                                        @click="showModalId=false"><img src="ico/trash.png" /></button>
                                     <button type="button" class="btn btn-sm btn-outline-secondary"
                                         id="show-modal-button"
                                         @click="showModalEdit = true, itemId = humanBeingById.id">

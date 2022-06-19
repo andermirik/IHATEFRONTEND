@@ -11,6 +11,7 @@ var app2 = new Vue({
       name: "",
     },
     showModalEdit: false,
+    showModalAdd: false,
     showModalId: false,
     hiddenId: null,
     posts: [''],
@@ -31,16 +32,15 @@ var app2 = new Vue({
     },
 
     makeTeam: function (event) {
-      var teamName = prompt("Введите имя команды: ");
-      if(teamName == null){
+      if(this.teamSave.name == null){
         return; 
       }
-      if(teamName.trim() === "") { 
-        alert("Имя команды должно быть обязательно заполненым.")
-        return; 
+      if(this.teamSave.name.trim() === "") { 
+        alert("Ошибка! Имя команды должно быть обязательно заполненым.")
+        return;
       }
       const headers = { "Content-Type": "application/json" };
-      fetch(backendUrl + `/team/make?teamName=${teamName}`, {
+      fetch(backendUrl + `/team/make?teamName=${this.teamSave.name}`, {
         method: "POST",
         headers
       })
@@ -50,25 +50,42 @@ var app2 = new Vue({
       })
       .then(response => {
         console.log(response)
+        alert("Поздравляю! Вы успешно создали команду.");
         this.findAll(null);
+        this.showModalAdd = false;
       })
       .catch( err => {
         alert("Попробуй еще раз");
       })
     },
 
-    removeHeroFromTeam: function (event, heroId) {
-      console.log(heroId)
-      if (confirm("Вы уверены, что хотите удалить эти данные?")) {
-        const headers = { "Content-Type": "application/json" };
-        fetch(backendUrl + `/team/${this.teamById.id}/remove/${heroId}`, {
-          method: "POST",
-          headers
-        })
-          .then(response => (this.team = this.team.filter(item => (item.id != heroId)))); 
-          setTimeout(() => alert("Поздравляю! Вы успешно удалили героя из команды."), 30);
-      }
-    },
+    // makeTeam: function (event) {
+    //   var teamName = prompt("Введите имя команды: ");
+    //   if(teamName == null){
+    //     return; 
+    //   }
+    //   if(teamName.trim() === "") { 
+    //     alert("Ошибка! Имя команды должно быть обязательно заполненым.")
+    //     return;
+    //   }
+    //   const headers = { "Content-Type": "application/json" };
+    //   fetch(backendUrl + `/team/make?teamName=${teamName}`, {
+    //     method: "POST",
+    //     headers
+    //   })
+    //   .then(response => {
+    //     if (!response.ok) throw new Error(response.status);
+    //       return response;
+    //   })
+    //   .then(response => {
+    //     console.log(response)
+    //     this.findAll(null);
+    //   })
+    //   .catch( err => {
+    //     alert("Попробуй еще раз");
+    //   })
+    // },
+
 
     addHeroToTeam: function (event) {
       let heroId = prompt(`Добавить героя в команду ${this.teamById.name} по уникальному идентификатору: `)
@@ -97,6 +114,19 @@ var app2 = new Vue({
         .catch(err => {
          alert('Ошибка! ' + ("" + err).slice(7));
        });
+    },
+
+    removeHeroFromTeam: function (event, heroId) {
+      console.log(heroId)
+      if (confirm("Вы уверены, что хотите удалить эти данные?")) {
+        const headers = { "Content-Type": "application/json" };
+        fetch(backendUrl + `/team/${this.teamById.id}/remove/${heroId}`, {
+          method: "POST",
+          headers
+        })
+          .then(response => (this.team = this.team.filter(item => (item.id != heroId)))); 
+          setTimeout(() => alert("Поздравляю! Вы успешно удалили героя из команды."), 30);
+      }
     },
 
     findById: function (event, id) {
