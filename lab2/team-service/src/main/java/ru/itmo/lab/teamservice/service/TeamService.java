@@ -13,6 +13,7 @@ import ru.itmo.lab.teamservice.model.TeamDto;
 import ru.itmo.lab.teamservice.repository.TeamRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +25,7 @@ public class TeamService {
     public List<TeamDto> findAll() {
         return teamRepository.findAll().stream()
                         .map(dtoMapper::toDto)
-                        .toList();
+                        .collect(Collectors.toList());
     }
 
     public TeamDto findById(Long teamId) {

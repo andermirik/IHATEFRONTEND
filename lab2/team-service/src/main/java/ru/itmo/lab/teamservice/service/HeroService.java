@@ -17,6 +17,7 @@ import ru.itmo.lab.teamservice.repository.HeroRepository;
 import ru.itmo.lab.teamservice.repository.TeamRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -82,7 +83,7 @@ public class HeroService {
                 throw new IllegalArgumentException("Герой не ответил. Он был вычеркнут из команды. heroId=" + hero.getHeroId());
             }
             return human;
-        }).toList();
+        }).collect(Collectors.toList());
         for(var human : humans) {
             humanBeingClient.update(human);
         }
