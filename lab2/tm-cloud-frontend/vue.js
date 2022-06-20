@@ -1,6 +1,6 @@
 //var backendUrl = "http://labvm-42-02.itmo-lab.cosm-lab.science:9093"
- var backendUrl = "http://192.168.3.3:8084"
-// var backendUrl = "http://labvm-42-02.itmo-lab.cosm-lab.science:8080"
+//var backendUrl = "http://192.168.3.3:8084"
+var backendUrl = "http://labvm-42-02.itmo-lab.cosm-lab.science:9099/tm-back-team"
 
 var app2 = new Vue({
   el: '#container',
