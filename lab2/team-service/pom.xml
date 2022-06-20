@@ -77,34 +77,38 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-                <version>3.2.1</version>
-                <configuration>
-                    <from>
-                        <image>openjdk:11-slim-buster</image>
-                        <auth>
-                            <username>andermirik</username>
-                            <password>${env.DOCKER_KEY}</password>
-                        </auth>
-                    </from>
-                    <to>
-                        <image>docker.io/andermirik/tm-back:team-${env.BUILD_TAG}</image>
-                        <auth>
-                            <username>andermirik</username>
-                            <password>${env.DOCKER_KEY}</password>
-                        </auth>
-                    </to>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+<!--            <plugin>-->
+<!--                <groupId>com.google.cloud.tools</groupId>-->
+<!--                <artifactId>jib-maven-plugin</artifactId>-->
+<!--                <version>3.2.1</version>-->
+<!--                <configuration>-->
+<!--                    <from>-->
+<!--                        <image>openjdk:11-slim-buster</image>-->
+<!--                        <auth>-->
+<!--                            <username>andermirik</username>-->
+<!--                            <password>${env.DOCKER_KEY}</password>-->
+<!--                        </auth>-->
+<!--                    </from>-->
+<!--                    <to>-->
+<!--                        <image>docker.io/andermirik/tm-back:team-${env.BUILD_TAG}</image>-->
+<!--                        <auth>-->
+<!--                            <username>andermirik</username>-->
+<!--                            <password>${env.DOCKER_KEY}</password>-->
+<!--                        </auth>-->
+<!--                    </to>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>build</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 
