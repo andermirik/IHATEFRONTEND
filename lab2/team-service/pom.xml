@@ -82,7 +82,7 @@
                 <version>3.2.1</version>
                 <configuration>
                     <from>
-                        <image>openjdk:17-slim-buster</image>
+                        <image>openjdk:11-slim-buster</image>
                         <auth>
                             <username>andermirik</username>
                             <password>${env.DOCKER_KEY}</password>
