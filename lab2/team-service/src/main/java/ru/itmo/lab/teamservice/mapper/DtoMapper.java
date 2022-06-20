@@ -6,6 +6,8 @@ import ru.itmo.lab.teamservice.model.HeroDto;
 import ru.itmo.lab.teamservice.model.Team;
 import ru.itmo.lab.teamservice.model.TeamDto;
 
+import java.util.stream.Collectors;
+
 @Service
 public class DtoMapper {
 
@@ -21,7 +23,7 @@ public class DtoMapper {
         return TeamDto.builder()
                 .id(team.getId())
                 .name(team.getName())
-                .heroes(team.getHeroes().stream().map(this::toDto).toList())
+                .heroes(team.getHeroes().stream().map(this::toDto).collect(Collectors.toList()))
                 .build();
     }
 
